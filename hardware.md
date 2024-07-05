@@ -12,11 +12,12 @@ surface electrode -> Amplifier -> filter -> ADC -> FFT -> bandpass filter -> ful
 ### FFT and bandpass filter
 - done in da microcontroller
 - find the cutoff frequencies
-- W = f_{high} - f_{low}
 
-- f_0 = \frac{f_{high} + f_{low}}{2}
+- $`W = f_{high} - f_{low}`$
 
-- |H_{BP}(f)|^2 = \frac{1}{1 + \left(\frac{\left(\frac{f}{f_0} - \frac{f_0}{f}\right)^2}{W^2}\right)^N}
+- $`f_0 = \frac{f_{high} + f_{low}}{2}`$
+
+- $`|H_{BP}(f)|^2 = \frac{1}{1 + \left(\frac{\left(\frac{f}{f_0} - \frac{f_0}{f}\right)^2}{W^2}\right)^N}`$
 
 
 --------------------------------------------------------------------
@@ -77,6 +78,7 @@ An EMG amplifier is like a super-sensitive listener for your muscles.
 6. **Output**:
    - The amplified and cleaned-up signal can then be displayed on a screen, recorded, or used to control devices.
 
+--------------------------------------------------------------------
 #### band pass filter
 allows signals within a specific frequency range to pass through while attenuating signals outside this range. It combines a high-pass and low-pass filter, defined by:
 1. Center frequency (f₀): The midpoint of the passband
