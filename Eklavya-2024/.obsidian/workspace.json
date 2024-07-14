@@ -1,0 +1,197 @@
+{
+  "main": {
+    "id": "47113393cdde2cb2",
+    "type": "split",
+    "children": [
+      {
+        "id": "1ba5a44bdbeed7fc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cf86845af76ce874",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EMG-armband/Neural Networks and Deep Learning.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e5749f9e5392d2aa",
+    "type": "split",
+    "children": [
+      {
+        "id": "56bcee782505b414",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d83d3e3ffa81db63",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b4f2afc6e766c8fd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "13cc6f3beacbe0de",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e4d9dde0ae7c00e2",
+    "type": "split",
+    "children": [
+      {
+        "id": "3e228a18f6b7465a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1d7589709ce81d4d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "EMG-armband/Neural Networks and Deep Learning.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "f8130274e534781b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "EMG-armband/Neural Networks and Deep Learning.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ec899772a9b735d5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "5cf2f8841a830ee9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "EMG-armband/Neural Networks and Deep Learning.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "cf86845af76ce874",
+  "lastOpenFiles": [
+    "EMG-armband/Shaunak Notes.md",
+    "assets/Pasted image 20240714121840.png",
+    "assets",
+    "Pasted image 20240714121709.png",
+    "EMG-armband/Neural Networks and Deep Learning.md",
+    "attachements/attachements",
+    "EMG-armband/MoM- 5-07-2024.md",
+    "EMG-armband/Shaunak's Notes.md",
+    "assets/Screenshot_2024-07-11_at_11.27.29_PM 1.png",
+    "MoM- 5/07/2024.md",
+    "EMG-armband/Neural Networks and Deep Learning.md",
+    "EMG-armband/Neural Networks and Deep Learning/Week 3.md",
+    "assets/Screenshot_2024-07-13_at_12.53.54_AM.png",
+    "assets/Screenshot_2024-07-13_at_12.32.33_AM.png",
+    "assets/Screenshot_2024-07-13_at_12.22.33_AM.png",
+    "assets/Screenshot_2024-07-12_at_4.32.18_PM 1.png",
+    "assets/Screenshot_2024-07-12_at_4.29.59_PM 1.png",
+    "assets/Screenshot_2024-07-12_at_4.23.35_PM 1.png",
+    "assets/Screenshot_2024-07-12_at_1.51.21_PM 1.png",
+    "Neural Networks and Deep Learning",
+    "EMG-armband/Neural Networks and Deep Learning/Week 3.md",
+    "EMG-armband/EMG Amplifier.md",
+    "MoM- 5/07",
+    "MoM- 5",
+    "EMG-armband/Hardware Design Workshop.md",
+    "EMG-armband/MoM - 30 June 2024.md",
+    "EMG-armband/Neural Networks and Deep Learning/Week 2.md",
+    "EMG-armband/Neural Networks and Deep Learning/Week 1.md",
+    "1.md",
+    "EMG-armband/Neural Networks and Deep Learning",
+    "EMG-armband/EMG Circuit for a Microcontroller.md",
+    "EMG-armband/Operational Amplifiers.md",
+    "assets",
+    "Operational Amplifiers",
+    "Operational Amplifiers.md",
+    "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 1/Week 1.md",
+    "EMG-armband/General Meet 26-06-2024.md",
+    "Notion/Shaunak Notes/MoM - 26-06-2024.md",
+    "Notion/Shaunak Notes/Shaunak Notes.md",
+    "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 2/Week 2.md",
+    "Notion/Shaunak Notes/Neural Networks and Deep Learning/Neural Networks and Deep Learning.md",
+    "Notion/Shaunak Notes/Operational Amplifiers/Operational Amplifiers.md",
+    "Notion/Shaunak Notes/Links for reference.md",
+    "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 2",
+    "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 1"
+  ]
+}

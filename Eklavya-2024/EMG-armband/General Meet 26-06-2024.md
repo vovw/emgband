@@ -1,0 +1,12 @@
+
+- Weekly Meets with mentors
+- General Meet every 2 weeks
+- 2 Months Eklavya duration. At the end submit a project report to super seniors
+- All communication on discord
+- 1st week is the learning meet
+- Weekly report submission to mentors.
+- For hardware projects you need to come to SRA lab
+- All general resources are on resources channel
+- We must know git and GitHub.
+- Whatever you work on make a GitHub repository.
+- Make notes as you go along
