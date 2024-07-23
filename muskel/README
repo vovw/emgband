@@ -1,45 +1,32 @@
-Key Terms:
-1. EMG (Electromyography): A technique for evaluating and recording the electrical activity produced by skeletal muscles.
-2. ADC (Analog-to-Digital Converter): A device that converts a continuous physical quantity (analog signal) to a digital number representing its amplitude.
-3. FreeRTOS: A real-time operating system for embedded devices.
-4. ESP-IDF: Espressif IoT Development Framework, used for programming ESP32 microcontrollers.
-5. GPIO: General Purpose Input/Output, pins on a microcontroller that can be programmed for various functions.
-6. Envelope detection: A technique to extract the overall shape or envelope of a rapidly varying signal.
-7. Circular buffer: A data structure that uses a single, fixed-size buffer as if it were connected end-to-end.
-8. IIR filter: Infinite Impulse Response filter, a type of digital filter.
+collects EMG (electromyography) data, filters it, and performs a frequency analysis using the Fast Fourier Transform (FFT).
 
-Now, let's go through the main components of the code:
+a) Data collection:
+- It reads analog data from a sensor connected to the ESP32.
+- The data is sampled at a rate of 500 times per second.
 
-1. Includes and Definitions:
-   The code includes necessary headers for the ESP-IDF framework and defines constants like sample rate and buffer size.
+b) Signal processing:
+- The raw signal goes through a bandpass filter to focus on frequencies between 75 and 150 Hz.
+- This filtering helps remove noise and focus on the most relevant part of the EMG signal.
 
-2. Global Variables:
-   It sets up a circular buffer for envelope detection and handles for ADC operations.
+c) Frequency analysis:
+- The code uses the Fast Fourier Transform (FFT) to convert the time-domain signal into frequency components.
+- This helps identify which frequencies are most prominent in the EMG signal.
 
-3. Function Prototypes:
-   Declarations for functions used in the program.
+ADC (Analog-to-Digital Converter): Converts the continuous analog signal from the sensor into digital values the microcontroller can process.
+Bandpass filter: A filter that allows signals between two specific frequencies to pass through while blocking others.
 
-4. app_main() Function:
-   This is the main function of the program. It:
-   - Configures the ADC (Analog-to-Digital Converter)
-   - Sets up ADC calibration
-   - Enters a loop where it:
-     a. Calculates elapsed time
-     b. Samples the EMG signal at the specified rate
-     c. Applies filtering to the EMG signal
-     d. Calculates the envelope of the signal
-     e. Prints the results
+# Program flow:
+   - The program continuously reads data from the ADC.
+   - It applies the bandpass filter to each sample.
+   - Once it collects 256 samples, it performs the FFT.
+   - After the FFT, it prints out the magnitude of each frequency component.
+   - This process repeats.
 
-5. getEnvelope() Function:
-   Implements the envelope detection algorithm using a circular buffer.
+# Key functions:
+   - `app_main()`: The main function that runs the data collection and processing loop.
+   - `bandpass_filter_75_150()`: Applies the bandpass filter to the input signal.
+   - `fft()`: Performs the Fast Fourier Transform on the collected samples.
 
-6. EMGFilter() Function:
-   Implements a Band-Pass Butterworth IIR digital filter to process the EMG signal.
 
-7. adc_calibration_init() Function:
-   Sets up ADC calibration to improve the accuracy of the analog readings.
-
-The program continuously samples the EMG signal, filters it to remove noise, calculates its envelope (which gives an idea of the overall muscle activity), and outputs the results. This could be used in applications like muscle activity monitoring or gesture recognition.
-
-Would you like me to elaborate on any specific part of the code or explain any of the concepts in more detail?
+basically a simple EMG analizer made using esp32.
 

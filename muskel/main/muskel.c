@@ -8,12 +8,13 @@
 
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
-#define SAMPLE_RATE 500
+#define SAMPLE_RATE 300
 #define INPUT_PIN ADC1_CHANNEL_6
 #define FFT_SIZE 256 // Must be a power of 2
 #define BUFFER_SIZE 128
 
-typedef struct {
+typedef struct
+{
     float real;
     float imag;
 } complex_t;
@@ -21,9 +22,9 @@ typedef struct {
 float bound(float value, float low, float high);
 float map(float x, float in_min, float in_max, float out_min, float out_max);
 float bandpass_filter_75_150(float input);
-int getEnvelop(int abs_emg);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
+void apply_hanning_window(complex_t *x, int n);
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
@@ -36,12 +37,6 @@ void app_main(void)
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-
-    static unsigned long past = 0;
-    unsigned long present;
-    unsigned long interval;
-
-    static long timer = 0;
 
     while (1)
     {
@@ -57,6 +52,7 @@ void app_main(void)
         }
         else
         {
+            apply_hanning_window(samples, FFT_SIZE);
             fft(samples, FFT_SIZE);
             for (int i = 0; i < FFT_SIZE / 2; i++)
             {
@@ -82,15 +78,6 @@ float bound(float value, float low, float high)
 float map(float x, float in_min, float in_max, float out_min, float out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-int getEnvelop(int abs_emg)
-{
-    sum -= circular_buffer[data_index];
-    sum += abs_emg;
-    circular_buffer[data_index] = abs_emg;
-    data_index = (data_index + 1) % BUFFER_SIZE;
-    return (sum / BUFFER_SIZE) * 2;
 }
 
 // Band-Pass Butterworth IIR digital filter, generated using filter_gen.py.
@@ -131,6 +118,16 @@ float bandpass_filter_75_150(float input)
     return output;
 }
 
+void apply_hanning_window(complex_t *x, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        float w = 0.5 * (1 - cos(2 * M_PI * i / (n - 1)));
+        x[i].real *= w;
+        x[i].imag *= w;
+    }
+}
+
 void fft(complex_t *x, int n)
 {
     bit_reverse(x, n);
@@ -142,7 +139,7 @@ void fft(complex_t *x, int n)
 
         for (int k = 0; k < n; k += m)
         {
-            for (int j = 0; j < m/2; j++)
+            for (int j = 0; j < m / 2; j++)
             {
                 complex_t t;
                 float omega_t = j * omega;
@@ -151,14 +148,14 @@ void fft(complex_t *x, int n)
 
                 complex_t u = x[k + j];
                 complex_t v;
-                v.real = t.real * x[k + j + m/2].real - t.imag * x[k + j + m/2].imag;
-                v.imag = t.real * x[k + j + m/2].imag + t.imag * x[k + j + m/2].real;
+                v.real = t.real * x[k + j + m / 2].real - t.imag * x[k + j + m / 2].imag;
+                v.imag = t.real * x[k + j + m / 2].imag + t.imag * x[k + j + m / 2].real;
 
                 x[k + j].real = u.real + v.real;
                 x[k + j].imag = u.imag + v.imag;
 
-                x[k + j + m/2].real = u.real - v.real;
-                x[k + j + m/2].imag = u.imag - v.imag;
+                x[k + j + m / 2].real = u.real - v.real;
+                x[k + j + m / 2].imag = u.imag - v.imag;
             }
         }
     }
@@ -181,3 +178,4 @@ void bit_reverse(complex_t *x, int n)
         }
     }
 }
+
