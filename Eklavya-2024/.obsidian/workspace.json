@@ -18,8 +18,31 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "846036e163eccf27",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.7"
+              }
+            }
+          },
+          {
+            "id": "d7d4a4344b3eccdd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EMG-armband/Fast Fourier Transform on ESP.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -85,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "EMG-armband/Neural Networks and Deep Learning/Week 3.md",
+                "file": "EMG-armband/Fast Fourier Transform on ESP.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "EMG-armband/Neural Networks and Deep Learning/Week 3.md",
+                "file": "EMG-armband/Fast Fourier Transform on ESP.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "EMG-armband/Neural Networks and Deep Learning/Week 3.md"
+                "file": "EMG-armband/Fast Fourier Transform on ESP.md"
               }
             }
           }
@@ -148,8 +171,11 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "50506f786f7d721c",
+  "active": "d7d4a4344b3eccdd",
   "lastOpenFiles": [
+    "assets/Pasted image 20240723121410.png",
+    "EMG-armband/Fast Fourier Transform on ESP.md",
+    "Untitled.md",
     "EMG-armband/Neural Networks and Deep Learning/Week 4.md",
     "assets/Pasted image 20240718034844.png",
     "assets/Pasted image 20240718034835.png",
@@ -191,7 +217,6 @@
     "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 2/Week 2.md",
     "Notion/Shaunak Notes/Neural Networks and Deep Learning/Neural Networks and Deep Learning.md",
     "Notion/Shaunak Notes/Operational Amplifiers/Operational Amplifiers.md",
-    "Notion/Shaunak Notes/Links for reference.md",
     "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 2",
     "Notion/Shaunak Notes/Neural Networks and Deep Learning/Week 1"
   ]

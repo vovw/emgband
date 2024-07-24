@@ -1120,18 +1120,6 @@
 		(uuid "0f405c9f-ed57-4161-ba1d-8478afbcd360")
 	)
 	(junction
-		(at 38.1 90.17)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "14203f69-ca1d-4294-9ecf-0a7118a792d5")
-	)
-	(junction
-		(at 38.1 97.79)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "14821795-66e7-461a-b92d-d691d429fd82")
-	)
-	(junction
 		(at 116.84 39.37)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1344,6 +1332,16 @@
 			(type default)
 		)
 		(uuid "1486034b-0b9e-4bed-abb2-d4e2615509a1")
+	)
+	(wire
+		(pts
+			(xy 38.1 97.79) (xy 49.53 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1629ca7f-cd95-4e5e-a8b2-1413fbf3b522")
 	)
 	(wire
 		(pts
@@ -1887,16 +1885,6 @@
 	)
 	(wire
 		(pts
-			(xy 38.1 97.79) (xy 49.53 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c4dc870a-3907-41c9-895b-3fcddb16c91a")
-	)
-	(wire
-		(pts
 			(xy 86.36 156.21) (xy 86.36 144.78)
 		)
 		(stroke
@@ -2201,6 +2189,17 @@
 		)
 		(uuid "49b91263-1902-41c6-867c-e4b0c0b0b306")
 	)
+	(label "72.5 - 725 Hz "
+		(at 151.13 36.83 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4f5e4ae0-d234-4588-afc4-97fbf68707ba")
+	)
 	(label "+5V"
 		(at 102.87 25.4 0)
 		(fields_autoplaced yes)
@@ -2256,17 +2255,6 @@
 		)
 		(uuid "9198436d-4a4e-4c61-8340-b310644882c1")
 	)
-	(label "19.4Hz - 2.2kHz frequency output"
-		(at 137.16 35.56 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "adb934f3-9a83-40c1-baa7-7b1b20a9e28a")
-	)
 	(label "+IN"
 		(at 44.45 172.72 0)
 		(fields_autoplaced yes)
@@ -2279,7 +2267,7 @@
 		(uuid "c360372f-45b1-4801-abb1-7a190d4e9381")
 	)
 	(label "40.24x Gain"
-		(at 99.06 60.96 0)
+		(at 99.06 63.5 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2288,17 +2276,6 @@
 			(justify left bottom)
 		)
 		(uuid "ea127e68-3458-423f-a2c1-f405f7abeac4")
-	)
-	(label "-5V"
-		(at 102.87 55.88 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f533a98b-5d40-4542-8fd4-959215b5663f")
 	)
 	(global_label "ampRef"
 		(shape input)
@@ -2332,48 +2309,6 @@
 			(justify right)
 		)
 		(uuid "6308f2d9-0b14-4620-847b-fa823bb7ac41")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at -21.844 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "ampRef"
-		(shape input)
-		(at 38.1 105.41 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "67a01f28-bf97-4289-be8f-02b3097e37b4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at -21.844 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "ampRef"
-		(shape input)
-		(at 38.1 82.55 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "a0ed5c28-a4c9-4076-bcfb-8d0071bc8db9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at -21.844 59.69 0)
 			(effects
@@ -2465,7 +2400,7 @@
 				)
 			)
 		)
-		(property "Value" "300k"
+		(property "Value" "2.2k"
 			(at 160.02 67.31 90)
 			(effects
 				(font
@@ -2579,75 +2514,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 38.1 101.6 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "08e9be48-7f49-4f49-b59a-bbfaaed6dc52")
-		(property "Reference" "C7"
-			(at 41.021 100.4316 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "100pF"
-			(at 41.021 102.743 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 37.1348 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 38.1 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 38.1 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "572b96ba-afa3-4c48-af44-b631554d5f7d")
-		)
-		(pin "2"
-			(uuid "56d8245b-cc0a-4e71-81c6-0342cdeb900b")
-		)
-		(instances
-			(project "EMG-Amplifier"
-				(path "/91570896-94e7-47e2-ad8c-e5af0e45a9ff"
-					(reference "C7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Amplifier_Operational:LM741")
 		(at 105.41 39.37 0)
 		(unit 1)
@@ -2735,7 +2601,7 @@
 	)
 	(symbol
 		(lib_id "Amplifier_Operational:LM324")
-		(at 101.6 95.25 0)
+		(at 114.3 162.56 0)
 		(unit 4)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2743,7 +2609,7 @@
 		(dnp no)
 		(uuid "1c4f945a-e70c-4161-88fb-c84ad926d212")
 		(property "Reference" "U1"
-			(at 33.02 142.24 0)
+			(at 45.72 209.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2751,7 +2617,7 @@
 			)
 		)
 		(property "Value" "LM324"
-			(at 33.02 144.78 0)
+			(at 45.72 212.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2759,7 +2625,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 100.33 92.71 0)
+			(at 113.03 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2768,7 +2634,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm2902-n.pdf"
-			(at 102.87 90.17 0)
+			(at 115.57 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2777,7 +2643,7 @@
 			)
 		)
 		(property "Description" "Low-Power, Quad-Operational Amplifiers, DIP-14/SOIC-14/SSOP-14"
-			(at 101.6 95.25 0)
+			(at 114.3 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2837,34 +2703,16 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 38.1 93.98 180)
+		(lib_id "power:GND")
+		(at 102.87 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "28ee684f-1277-48bb-8c47-3a512a131d53")
-		(property "Reference" "C6"
-			(at 41.021 92.8116 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "1nF"
-			(at 41.021 95.123 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 37.1348 90.17 0)
+		(uuid "273195cd-7ddf-4782-9bb7-2bfd288d8c10")
+		(property "Reference" "#PWR03"
+			(at 102.87 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2872,17 +2720,32 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 38.1 93.98 0)
+		(property "Value" "GND"
+			(at 102.87 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 102.87 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(property "Description" ""
-			(at 38.1 93.98 0)
+			(at 102.87 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2891,15 +2754,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "4fd23fec-7b86-4988-96bc-58687f1bf67d")
-		)
-		(pin "2"
-			(uuid "7c1fad60-762f-40db-ba2b-8ef02ce04273")
+			(uuid "1cd234fa-6e71-43c0-a508-0882c50506e7")
 		)
 		(instances
 			(project "EMG-Amplifier"
 				(path "/91570896-94e7-47e2-ad8c-e5af0e45a9ff"
-					(reference "C6")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -3126,7 +2986,7 @@
 				)
 			)
 		)
-		(property "Value" "0.22nF"
+		(property "Value" "100nF"
 			(at 158.75 57.15 90)
 			(effects
 				(font
@@ -3193,7 +3053,7 @@
 				)
 			)
 		)
-		(property "Value" "1K"
+		(property "Value" "1M"
 			(at 34.29 90.17 90)
 			(effects
 				(font
@@ -3466,7 +3326,7 @@
 				)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "2.2uF"
 			(at 142.24 43.18 90)
 			(effects
 				(font
@@ -3599,7 +3459,7 @@
 				)
 			)
 		)
-		(property "Value" "1K"
+		(property "Value" "1M"
 			(at 34.29 97.79 90)
 			(effects
 				(font
@@ -3720,75 +3580,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 38.1 86.36 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "8fb4880f-9836-43d5-bd3e-419fab8793a5")
-		(property "Reference" "C5"
-			(at 41.021 85.1916 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "100pF"
-			(at 41.021 87.503 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 37.1348 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 38.1 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 38.1 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "19d84ffa-3d83-463a-bf5e-975a5e9df6dd")
-		)
-		(pin "2"
-			(uuid "1dacea6c-07b7-4ea1-b940-d590e18ddcbb")
-		)
-		(instances
-			(project "EMG-Amplifier"
-				(path "/91570896-94e7-47e2-ad8c-e5af0e45a9ff"
-					(reference "C5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Amplifier_Operational:LM324")
 		(at 76.2 175.26 0)
 		(unit 2)
@@ -3841,46 +3632,46 @@
 			)
 		)
 		(pin "9"
-			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff3")
+			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff4")
 		)
 		(pin "10"
-			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e26")
+			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e27")
 		)
 		(pin "4"
-			(uuid "a8d253e1-2780-4215-97d5-bc8f70684986")
+			(uuid "a8d253e1-2780-4215-97d5-bc8f70684987")
 		)
 		(pin "1"
-			(uuid "235bde78-25de-4a50-b45c-de782851966b")
+			(uuid "235bde78-25de-4a50-b45c-de782851966c")
 		)
 		(pin "11"
-			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d4")
+			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d5")
 		)
 		(pin "8"
-			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282d")
+			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282e")
 		)
 		(pin "12"
-			(uuid "95e0c585-48ab-42ef-b48c-a92245216d63")
+			(uuid "95e0c585-48ab-42ef-b48c-a92245216d64")
 		)
 		(pin "13"
-			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86db9f")
+			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86dba0")
 		)
 		(pin "14"
-			(uuid "77999fe9-4792-49bc-a061-62e5192b54ec")
+			(uuid "77999fe9-4792-49bc-a061-62e5192b54ed")
 		)
 		(pin "6"
-			(uuid "5ba42320-1276-4fc8-a350-a0c915666112")
+			(uuid "5ba42320-1276-4fc8-a350-a0c915666113")
 		)
 		(pin "2"
-			(uuid "387040e8-6659-430e-b0f8-12bc02163b6d")
+			(uuid "387040e8-6659-430e-b0f8-12bc02163b6e")
 		)
 		(pin "7"
-			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d69")
+			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d6a")
 		)
 		(pin "5"
-			(uuid "a04fe968-540a-474f-82bf-6201d12555de")
+			(uuid "a04fe968-540a-474f-82bf-6201d12555df")
 		)
 		(pin "3"
-			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce6")
+			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce7")
 		)
 		(instances
 			(project ""
@@ -4163,7 +3954,7 @@
 	)
 	(symbol
 		(lib_id "Amplifier_Operational:LM324")
-		(at 114.3 162.56 0)
+		(at 101.6 95.25 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4172,7 +3963,7 @@
 		(fields_autoplaced yes)
 		(uuid "b8cf353f-d6fb-4813-91f7-50e6771d04ab")
 		(property "Reference" "U1"
-			(at 114.3 152.4 0)
+			(at 101.6 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4180,7 +3971,7 @@
 			)
 		)
 		(property "Value" "LM324"
-			(at 114.3 154.94 0)
+			(at 101.6 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4188,7 +3979,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 113.03 160.02 0)
+			(at 100.33 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4197,7 +3988,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm2902-n.pdf"
-			(at 115.57 157.48 0)
+			(at 102.87 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4206,7 +3997,7 @@
 			)
 		)
 		(property "Description" "Low-Power, Quad-Operational Amplifiers, DIP-14/SOIC-14/SSOP-14"
-			(at 114.3 162.56 0)
+			(at 101.6 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4215,46 +4006,46 @@
 			)
 		)
 		(pin "9"
-			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff3")
+			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff5")
 		)
 		(pin "10"
-			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e26")
+			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e28")
 		)
 		(pin "4"
-			(uuid "a8d253e1-2780-4215-97d5-bc8f70684986")
+			(uuid "a8d253e1-2780-4215-97d5-bc8f70684988")
 		)
 		(pin "1"
-			(uuid "235bde78-25de-4a50-b45c-de782851966b")
+			(uuid "235bde78-25de-4a50-b45c-de782851966d")
 		)
 		(pin "11"
-			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d4")
+			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d6")
 		)
 		(pin "8"
-			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282d")
+			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282f")
 		)
 		(pin "12"
-			(uuid "95e0c585-48ab-42ef-b48c-a92245216d63")
+			(uuid "95e0c585-48ab-42ef-b48c-a92245216d65")
 		)
 		(pin "13"
-			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86db9f")
+			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86dba1")
 		)
 		(pin "14"
-			(uuid "77999fe9-4792-49bc-a061-62e5192b54ec")
+			(uuid "77999fe9-4792-49bc-a061-62e5192b54ee")
 		)
 		(pin "6"
-			(uuid "5ba42320-1276-4fc8-a350-a0c915666112")
+			(uuid "5ba42320-1276-4fc8-a350-a0c915666114")
 		)
 		(pin "2"
-			(uuid "387040e8-6659-430e-b0f8-12bc02163b6d")
+			(uuid "387040e8-6659-430e-b0f8-12bc02163b6f")
 		)
 		(pin "7"
-			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d69")
+			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d6b")
 		)
 		(pin "5"
-			(uuid "a04fe968-540a-474f-82bf-6201d12555de")
+			(uuid "a04fe968-540a-474f-82bf-6201d12555e0")
 		)
 		(pin "3"
-			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce6")
+			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce8")
 		)
 		(instances
 			(project ""
@@ -4473,46 +4264,46 @@
 			)
 		)
 		(pin "9"
-			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff3")
+			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff6")
 		)
 		(pin "10"
-			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e26")
+			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e29")
 		)
 		(pin "4"
-			(uuid "a8d253e1-2780-4215-97d5-bc8f70684986")
+			(uuid "a8d253e1-2780-4215-97d5-bc8f70684989")
 		)
 		(pin "1"
-			(uuid "235bde78-25de-4a50-b45c-de782851966b")
+			(uuid "235bde78-25de-4a50-b45c-de782851966e")
 		)
 		(pin "11"
-			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d4")
+			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d7")
 		)
 		(pin "8"
-			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282d")
+			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc2830")
 		)
 		(pin "12"
-			(uuid "95e0c585-48ab-42ef-b48c-a92245216d63")
+			(uuid "95e0c585-48ab-42ef-b48c-a92245216d66")
 		)
 		(pin "13"
-			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86db9f")
+			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86dba2")
 		)
 		(pin "14"
-			(uuid "77999fe9-4792-49bc-a061-62e5192b54ec")
+			(uuid "77999fe9-4792-49bc-a061-62e5192b54ef")
 		)
 		(pin "6"
-			(uuid "5ba42320-1276-4fc8-a350-a0c915666112")
+			(uuid "5ba42320-1276-4fc8-a350-a0c915666115")
 		)
 		(pin "2"
-			(uuid "387040e8-6659-430e-b0f8-12bc02163b6d")
+			(uuid "387040e8-6659-430e-b0f8-12bc02163b70")
 		)
 		(pin "7"
-			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d69")
+			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d6c")
 		)
 		(pin "5"
-			(uuid "a04fe968-540a-474f-82bf-6201d12555de")
+			(uuid "a04fe968-540a-474f-82bf-6201d12555e1")
 		)
 		(pin "3"
-			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce6")
+			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce9")
 		)
 		(instances
 			(project ""
@@ -4646,46 +4437,46 @@
 			)
 		)
 		(pin "9"
-			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff3")
+			(uuid "c8ce720b-b6fb-494d-83c3-e7352f19aff7")
 		)
 		(pin "10"
-			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e26")
+			(uuid "0657be37-7aab-4ee7-bea4-96f5bf986e2a")
 		)
 		(pin "4"
-			(uuid "a8d253e1-2780-4215-97d5-bc8f70684986")
+			(uuid "a8d253e1-2780-4215-97d5-bc8f7068498a")
 		)
 		(pin "1"
-			(uuid "235bde78-25de-4a50-b45c-de782851966b")
+			(uuid "235bde78-25de-4a50-b45c-de782851966f")
 		)
 		(pin "11"
-			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d4")
+			(uuid "f40c8095-cbdc-4fb9-bb55-14032cca58d8")
 		)
 		(pin "8"
-			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc282d")
+			(uuid "2218bc37-b81d-4ed6-9fdc-ae8894fc2831")
 		)
 		(pin "12"
-			(uuid "95e0c585-48ab-42ef-b48c-a92245216d63")
+			(uuid "95e0c585-48ab-42ef-b48c-a92245216d67")
 		)
 		(pin "13"
-			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86db9f")
+			(uuid "ee12dbd8-1714-4e07-a7a6-43eb2e86dba3")
 		)
 		(pin "14"
-			(uuid "77999fe9-4792-49bc-a061-62e5192b54ec")
+			(uuid "77999fe9-4792-49bc-a061-62e5192b54f0")
 		)
 		(pin "6"
-			(uuid "5ba42320-1276-4fc8-a350-a0c915666112")
+			(uuid "5ba42320-1276-4fc8-a350-a0c915666116")
 		)
 		(pin "2"
-			(uuid "387040e8-6659-430e-b0f8-12bc02163b6d")
+			(uuid "387040e8-6659-430e-b0f8-12bc02163b71")
 		)
 		(pin "7"
-			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d69")
+			(uuid "e1aab86f-e005-4c6d-89ab-7fb9a0d74d6d")
 		)
 		(pin "5"
-			(uuid "a04fe968-540a-474f-82bf-6201d12555de")
+			(uuid "a04fe968-540a-474f-82bf-6201d12555e2")
 		)
 		(pin "3"
-			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87ce6")
+			(uuid "4dcd22d3-538a-4760-9bd4-f9c790f87cea")
 		)
 		(instances
 			(project ""
@@ -4851,7 +4642,7 @@
 				)
 			)
 		)
-		(property "Value" "8.2k"
+		(property "Value" "1k"
 			(at 132.08 44.45 90)
 			(effects
 				(font
