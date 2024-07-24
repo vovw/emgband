@@ -6,6 +6,8 @@
 #include "driver/adc.h"
 #include "esp_timer.h"
 
+
+
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
 #define SAMPLE_RATE 300
@@ -34,6 +36,8 @@ void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
 void print_colored_magnitude(int frequency_bin, float magnitude);
+void emg();
+
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
@@ -41,13 +45,19 @@ int data_index = 0, sum = 0;
 static complex_t samples[FFT_SIZE];
 static int sample_index = 0;
 
+
 void app_main(void)
 {
+	xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+}
+
+void emg(){
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
 
     printf("setup\n");
+
     while (1)
     {
         if (sample_index < FFT_SIZE)
@@ -72,10 +82,10 @@ void app_main(void)
 
             sample_index = 0; // Reset sample index for next set of samples
         }
-        vTaskDelay(1000 / SAMPLE_RATE / portTICK_PERIOD_MS);
-    }
-}
 
+    }
+
+}
 void print_colored_magnitude(int frequency_bin, float magnitude)
 {
     const char* color;
