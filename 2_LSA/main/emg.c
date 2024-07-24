@@ -64,13 +64,40 @@ void app_main(void)
         {
             apply_hanning_window(samples, FFT_SIZE);
             fft(samples, FFT_SIZE);
+
+            int save_to_file = 0; // Flag to indicate if we need to save the data
             for (int i = 0; i < FFT_SIZE / 2; i++)
             {
                 float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
                 print_colored_magnitude(i, magnitude);
+
+                if (magnitude > 50)
+                {
+                    save_to_file = 1;
+                }
             }
 
-            sample_index = 0; // Reset sample index for next set of samples
+            if (save_to_file)
+            {
+                FILE *file = fopen("/spiffs/finger_movement.txt", "a"); // Open the file in append mode
+                if (file)
+                {
+                    for (int i = 0; i < FFT_SIZE; i++)
+                    {
+                        fprintf(file, " %d: %.2f + %.2fi,", i, samples[i].real, samples[i].imag);
+                    }
+                    save_to_file = 0;
+                    fclose(file);
+                    printf("Data saved to finger_movement.txt\n");
+                }
+                else
+                {
+                    printf("Failed to open file for writing\n");
+                }
+            }
+
+            sample_index = 0; // Reset sample index for the next set of samples
+            fprintf(file, "\n");
         }
         vTaskDelay(1000 / SAMPLE_RATE / portTICK_PERIOD_MS);
     }
