@@ -46,7 +46,7 @@ void app_main(void)
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-
+    FILE *file = fopen("/spiffs/finger_movement.txt", "a"); // Open the file in append mode
     printf("setup\n");
     while (1)
     {
@@ -99,6 +99,7 @@ void app_main(void)
             sample_index = 0; // Reset sample index for the next set of samples
             fprintf(file, "\n");
         }
+        fclose(file);
         vTaskDelay(1000 / SAMPLE_RATE / portTICK_PERIOD_MS);
     }
 }
