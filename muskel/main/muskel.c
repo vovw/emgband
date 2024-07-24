@@ -9,9 +9,17 @@
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
 #define SAMPLE_RATE 300
+/*GPIO 34*/
 #define INPUT_PIN ADC1_CHANNEL_6
 #define FFT_SIZE 256 // Must be a power of 2
 #define BUFFER_SIZE 128
+
+// ANSI color codes
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_ORANGE  "\x1b[33m"
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 
 typedef struct
 {
@@ -25,6 +33,7 @@ float bandpass_filter_75_150(float input);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
+void print_colored_magnitude(int frequency_bin, float magnitude);
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
@@ -38,6 +47,7 @@ void app_main(void)
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
 
+    printf("setup\n");
     while (1)
     {
         if (sample_index < FFT_SIZE)
@@ -57,7 +67,7 @@ void app_main(void)
             for (int i = 0; i < FFT_SIZE / 2; i++)
             {
                 float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-                printf("Frequency bin %d: %f\n", i, magnitude);
+                print_colored_magnitude(i, magnitude);
             }
 
             sample_index = 0; // Reset sample index for next set of samples
@@ -66,6 +76,21 @@ void app_main(void)
     }
 }
 
+void print_colored_magnitude(int frequency_bin, float magnitude)
+{
+    const char* color;
+    if (magnitude < 10) {
+        color = ANSI_COLOR_GREEN;
+    } else if (magnitude < 130) {
+        color = ANSI_COLOR_BLUE;
+    } else if (magnitude < 200) {
+        color = ANSI_COLOR_ORANGE;
+    } else {
+        color = ANSI_COLOR_RED;
+    }
+    
+    printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
+}
 float bound(float value, float low, float high)
 {
     if (value < low)
