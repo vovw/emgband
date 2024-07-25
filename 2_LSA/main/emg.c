@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "esp_now.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/adc.h"
@@ -13,6 +14,7 @@
 #define INPUT_PIN ADC1_CHANNEL_6
 #define FFT_SIZE 256 // Must be a power of 2
 #define BUFFER_SIZE 128
+#define CHANNEL 1
 
 // ANSI color codes
 #define ANSI_COLOR_GREEN "\x1b[32m"
@@ -35,16 +37,20 @@ void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
 void print_colored_magnitude(int frequency_bin, float magnitude);
 void emg();
+void sendNow();
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
 
 static complex_t samples[FFT_SIZE];
 static int sample_index = 0;
+esp_now_peer_info_t slave;
+slave.peer_addr = [];
 
 void app_main(void)
 {
-    xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+    xTaskCreatePinnedToCore(emg, "does emg things", 4096, NULL, 1, NULL, 0);
+    xTaskCreatePinnedToCore(sendNow, "ESP-NOW Data Transfer", 4096, NULL, 1, 1);
 }
 
 void emg()
@@ -52,7 +58,12 @@ void emg()
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-    FILE *file = fopen("finger_movement.txt", "w"); // Open the file in append mode
+    FILE *file = fopen("finger_movement.txt", "w");
+    if (!file)
+    {
+        printf("Failed to open file for writing\n");
+        return;
+    }
     printf("setup\n");
 
     while (1)
@@ -107,9 +118,49 @@ void emg()
             sample_index = 0; // Reset sample index for the next set of samples
             fprintf(file, "\n");
         }
-        fclose(file);
     }
+    fclose(file);
 }
+
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
+{
+    printf("Data is Sent!!");
+}
+
+void sendNow()
+{
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_start());
+
+    ESP_ERROR_CHECK(esp_now_init());
+    ESP_ERROR_CHECK(esp_now_register_send_cb(OnDataSent));
+
+    // Configure the peer information (ensure 'slave' is properly configured)
+    // Example:
+    // memcpy(slave.peer_addr, peer_mac, 6);
+    slave.channel = CHANNEL;
+    slave.encrypt = false;
+
+    ESP_ERROR_CHECK(esp_now_add_peer(&slave));
+
+    uint8_t mac_transmitter[6];
+    ESP_ERROR_CHECK(esp_wifi_get_mac(ESP_IF_WIFI_STA, mac_transmitter));
+
+    // Optional: Print MAC address
+    printf("Transmitter MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
+           mac_transmitter[0], mac_transmitter[1], mac_transmitter[2],
+           mac_transmitter[3], mac_transmitter[4], mac_transmitter[5]);
+
+    while (sample_index == 0)
+    {
+        esp_now_send(slave.peer_addr, &samples, sizeof(samples));
+    }
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+}
+
 void print_colored_magnitude(int frequency_bin, float magnitude)
 {
     const char *color;
