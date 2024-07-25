@@ -34,6 +34,7 @@ void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
 void print_colored_magnitude(int frequency_bin, float magnitude);
+void emg();
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
@@ -43,11 +44,17 @@ static int sample_index = 0;
 
 void app_main(void)
 {
+    xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+}
+
+void emg()
+{
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-    FILE *file = fopen("/spiffs/finger_movement.txt", "a"); // Open the file in append mode
+    FILE *file = fopen("finger_movement.txt", "w"); // Open the file in append mode
     printf("setup\n");
+
     while (1)
     {
         if (sample_index < FFT_SIZE)
@@ -62,6 +69,7 @@ void app_main(void)
         }
         else
         {
+
             apply_hanning_window(samples, FFT_SIZE);
             fft(samples, FFT_SIZE);
 
@@ -84,10 +92,10 @@ void app_main(void)
                 {
                     for (int i = 0; i < FFT_SIZE; i++)
                     {
-                        fprintf(file, " %d: %.2f + %.2fi,", i, samples[i].real, samples[i].imag);
+                        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
+                        fprintf(file, "%.2f,", magnitude);
                     }
                     save_to_file = 0;
-                    fclose(file);
                     printf("Data saved to finger_movement.txt\n");
                 }
                 else
@@ -100,10 +108,8 @@ void app_main(void)
             fprintf(file, "\n");
         }
         fclose(file);
-        vTaskDelay(1000 / SAMPLE_RATE / portTICK_PERIOD_MS);
     }
 }
-
 void print_colored_magnitude(int frequency_bin, float magnitude)
 {
     const char *color;
