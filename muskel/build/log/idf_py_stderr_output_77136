@@ -1,6 +1,0 @@
-Compiler supported targets: xtensa-esp32-elf
-
-In file included from /Users/asuna/fun/emgband/muskel/main/muskel.c:6:
-/Users/asuna/esp/esp-idf/components/driver/deprecated/driver/adc.h:19:2: warning: #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively" [-Wcpp]
-   19 | #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
-      |  ^~~~~~~
