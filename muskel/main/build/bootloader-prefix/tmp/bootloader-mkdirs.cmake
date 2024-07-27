@@ -1,0 +1,22 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file Copyright.txt or https://cmake.org/licensing for details.
+
+cmake_minimum_required(VERSION 3.5)
+
+file(MAKE_DIRECTORY
+  "/Users/asuna/esp/esp-idf/components/bootloader/subproject"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/tmp"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/src/bootloader-stamp"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/src"
+  "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/src/bootloader-stamp"
+)
+
+set(configSubDirs )
+foreach(subDir IN LISTS configSubDirs)
+    file(MAKE_DIRECTORY "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+endforeach()
+if(cfgdir)
+  file(MAKE_DIRECTORY "/Users/asuna/fun/emgband/muskel/main/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+endif()

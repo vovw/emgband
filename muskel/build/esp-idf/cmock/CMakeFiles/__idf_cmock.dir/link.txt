@@ -1,0 +1,2 @@
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar qc libcmock.a CMakeFiles/__idf_cmock.dir/CMock/src/cmock.c.obj
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib libcmock.a

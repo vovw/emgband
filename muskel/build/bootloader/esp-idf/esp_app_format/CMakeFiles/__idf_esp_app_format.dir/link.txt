@@ -1,0 +1,2 @@
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar qc libesp_app_format.a CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib libesp_app_format.a

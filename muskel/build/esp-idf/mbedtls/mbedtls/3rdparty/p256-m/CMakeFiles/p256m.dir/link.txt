@@ -1,0 +1,2 @@
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar qc libp256m.a "CMakeFiles/p256m.dir/p256-m_driver_entrypoints.c.obj" "CMakeFiles/p256m.dir/p256-m/p256-m.c.obj"
+/Users/asuna/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib libp256m.a

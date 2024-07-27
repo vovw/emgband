@@ -1,0 +1,39 @@
+In file included from /Users/asuna/fun/emgband/muskel/main/muskel.c:6:
+/Users/asuna/esp/esp-idf/components/driver/deprecated/driver/adc.h:19:2: warning: #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively" [-Wcpp]
+   19 | #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
+      |  ^~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c: In function 'app_main':
+/Users/asuna/fun/emgband/muskel/main/muskel.c:51:9: error: implicit declaration of function 'xtaskcreate'; did you mean 'xTaskCreate'? [-Werror=implicit-function-declaration]
+   51 |         xtaskcreate(emg, "does emg things", 4096, null, tskidle_priority, null);
+      |         ^~~~~~~~~~~
+      |         xTaskCreate
+/Users/asuna/fun/emgband/muskel/main/muskel.c:51:51: error: 'null' undeclared (first use in this function)
+   51 |         xtaskcreate(emg, "does emg things", 4096, null, tskidle_priority, null);
+      |                                                   ^~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c:51:51: note: each undeclared identifier is reported only once for each function it appears in
+/Users/asuna/fun/emgband/muskel/main/muskel.c:51:57: error: 'tskidle_priority' undeclared (first use in this function)
+   51 |         xtaskcreate(emg, "does emg things", 4096, null, tskidle_priority, null);
+      |                                                         ^~~~~~~~~~~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c: In function 'emg':
+/Users/asuna/fun/emgband/muskel/main/muskel.c:69:45: error: 'INPUT_PIN' undeclared (first use in this function); did you mean 'INT_MIN'?
+   69 |             int sensor_value = adc1_get_raw(INPUT_PIN);
+      |                                             ^~~~~~~~~
+      |                                             INT_MIN
+/Users/asuna/fun/emgband/muskel/main/muskel.c:71:55: error: 'CONSTRAIN_EMG_LOW' undeclared (first use in this function)
+   71 |             sensor_value = map(sensor_value, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
+      |                                                       ^~~~~~~~~~~~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c:71:74: error: 'CONSTRAIN_EMG_HIGH' undeclared (first use in this function)
+   71 |             sensor_value = map(sensor_value, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
+      |                                                                          ^~~~~~~~~~~~~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c: In function 'apply_hanning_window':
+/Users/asuna/fun/emgband/muskel/main/muskel.c:178:38: error: 'm_pi' undeclared (first use in this function)
+  178 |         float w = 0.5 * (1 - cos(2 * m_pi * i / (n - 1)));
+      |                                      ^~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c: In function 'fft':
+/Users/asuna/fun/emgband/muskel/main/muskel.c:191:30: error: 'm_pi' undeclared (first use in this function)
+  191 |         float omega = -2.0 * m_pi / m;
+      |                              ^~~~
+cc1: some warnings being treated as errors
+make[2]: *** [esp-idf/main/CMakeFiles/__idf_main.dir/muskel.c.obj] Error 1
+make[1]: *** [esp-idf/main/CMakeFiles/__idf_main.dir/all] Error 2
+make: *** [all] Error 2

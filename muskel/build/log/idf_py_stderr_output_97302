@@ -1,0 +1,51 @@
+[0;33m--- esp-idf-monitor 1.4.0 on /dev/cu.usbserial-10 115200 ---[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---[0m
+[0;33m0x40080400: _init at ??:?
+[0m
+[0;33m0x400810f0: call_start_cpu1 at /Users/asuna/esp/esp-idf/components/esp_system/port/cpu_start.c:157
+[0m
+[0;33m0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40081722: panic_abort at /Users/asuna/esp/esp-idf/components/esp_system/panic.c:452
+0x4008578d: esp_system_abort at /Users/asuna/esp/esp-idf/components/esp_system/port/esp_system_chip.c:84
+0x4008ab42: abort at /Users/asuna/esp/esp-idf/components/newlib/abort.c:38
+0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40080400: _init at ??:?
+[0m
+[0;33m0x400810f0: call_start_cpu1 at /Users/asuna/esp/esp-idf/components/esp_system/port/cpu_start.c:157
+[0m
+[0;33m0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40081722: panic_abort at /Users/asuna/esp/esp-idf/components/esp_system/panic.c:452
+0x4008578d: esp_system_abort at /Users/asuna/esp/esp-idf/components/esp_system/port/esp_system_chip.c:84
+0x4008ab42: abort at /Users/asuna/esp/esp-idf/components/newlib/abort.c:38
+0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40080400: _init at ??:?
+[0m
+[0;33m0x400810f0: call_start_cpu1 at /Users/asuna/esp/esp-idf/components/esp_system/port/cpu_start.c:157
+[0m
+[0;33m0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40081722: panic_abort at /Users/asuna/esp/esp-idf/components/esp_system/panic.c:452
+0x4008578d: esp_system_abort at /Users/asuna/esp/esp-idf/components/esp_system/port/esp_system_chip.c:84
+0x4008ab42: abort at /Users/asuna/esp/esp-idf/components/newlib/abort.c:38
+0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40080400: _init at ??:?
+[0m
+[0;33m0x400810f0: call_start_cpu1 at /Users/asuna/esp/esp-idf/components/esp_system/port/cpu_start.c:157
+[0m
+[0;33m0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40081722: panic_abort at /Users/asuna/esp/esp-idf/components/esp_system/panic.c:452
+0x4008578d: esp_system_abort at /Users/asuna/esp/esp-idf/components/esp_system/port/esp_system_chip.c:84
+0x4008ab42: abort at /Users/asuna/esp/esp-idf/components/newlib/abort.c:38
+0x40087c4b: vPortTaskWrapper at /Users/asuna/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:166
+[0m
+[0;33m0x40080400: _init at ??:?
+[0m
+[0;33m0x400810f0: call_start_cpu1 at /Users/asuna/esp/esp-idf/components/esp_system/port/cpu_start.c:157
+[0m
+[0m

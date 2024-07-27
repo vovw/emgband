@@ -1,0 +1,8 @@
+Compiler supported targets: xtensa-esp32-elf
+
+CMake Error at /Users/asuna/esp/esp-idf/tools/cmake/component.cmake:439 (message):
+  Called idf_component_register from a non-component directory.
+Call Stack (most recent call first):
+  CMakeLists.txt:6 (idf_component_register)
+
+

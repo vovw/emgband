@@ -1,0 +1,12 @@
+In file included from /Users/asuna/fun/emgband/muskel/main/muskel.c:6:
+/Users/asuna/esp/esp-idf/components/driver/deprecated/driver/adc.h:19:2: warning: #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively" [-Wcpp]
+   19 | #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
+      |  ^~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c: In function 'emg':
+/Users/asuna/fun/emgband/muskel/main/muskel.c:61:14: error: 'raw_data' undeclared (first use in this function)
+   61 |     else if(!raw_data){
+      |              ^~~~~~~~
+/Users/asuna/fun/emgband/muskel/main/muskel.c:61:14: note: each undeclared identifier is reported only once for each function it appears in
+make[2]: *** [esp-idf/main/CMakeFiles/__idf_main.dir/muskel.c.obj] Error 1
+make[1]: *** [esp-idf/main/CMakeFiles/__idf_main.dir/all] Error 2
+make: *** [all] Error 2

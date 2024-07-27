@@ -1,0 +1,4 @@
+CMake Error at CMakeLists.txt:7:
+  Parse error.  Expected "(", got identifier with text "esp_wifi".
+
+
