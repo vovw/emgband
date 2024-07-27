@@ -5,6 +5,11 @@ title: The Fast Fourier Transform (FF
 
 # FFT
 
+https://youtu.be/spUNpyF58BY?si=sagmahwpWOHDw7dS
+https://youtu.be/qz0MLVh7Gok?si=3Ny0icUNbavIlHg5
+https://youtu.be/PRUn5Alm6Vk?si=5fMewBNEyoC2k-YJ
+https://youtu.be/tgH-a-vaiq8?si=d1YMxc0TO2VAYZPQ
+
 ## How will we use
 Basically Fourier Transforms helps to convert the y axis from voltage to frequency. So in the EMG example we have a wave form which spikes when muscle contracts. Converting this voltage to frequency domain would filter out the steady state and highlight the contractions.
 
