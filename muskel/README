@@ -1,0 +1,32 @@
+collects EMG (electromyography) data, filters it, and performs a frequency analysis using the Fast Fourier Transform (FFT).
+
+a) Data collection:
+- It reads analog data from a sensor connected to the ESP32.
+- The data is sampled at a rate of 500 times per second.
+
+b) Signal processing:
+- The raw signal goes through a bandpass filter to focus on frequencies between 75 and 150 Hz.
+- This filtering helps remove noise and focus on the most relevant part of the EMG signal.
+
+c) Frequency analysis:
+- The code uses the Fast Fourier Transform (FFT) to convert the time-domain signal into frequency components.
+- This helps identify which frequencies are most prominent in the EMG signal.
+
+ADC (Analog-to-Digital Converter): Converts the continuous analog signal from the sensor into digital values the microcontroller can process.
+Bandpass filter: A filter that allows signals between two specific frequencies to pass through while blocking others.
+
+# Program flow:
+   - The program continuously reads data from the ADC.
+   - It applies the bandpass filter to each sample.
+   - Once it collects 256 samples, it performs the FFT.
+   - After the FFT, it prints out the magnitude of each frequency component.
+   - This process repeats.
+
+# Key functions:
+   - `app_main()`: The main function that runs the data collection and processing loop.
+   - `bandpass_filter_75_150()`: Applies the bandpass filter to the input signal.
+   - `fft()`: Performs the Fast Fourier Transform on the collected samples.
+
+
+basically a simple EMG analizer made using esp32.
+
