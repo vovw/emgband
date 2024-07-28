@@ -1,3 +1,4 @@
+
 # Setting up you Machine Learning Application
 
 ## Train/Dev/Test sets
@@ -209,3 +210,20 @@ this is how we initialise random weights. This term at the end avoid the vanishi
 
 ![[Pasted image 20240726194529.png|500]]
 
+
+## Numerical Approximation of Gradients
+
+![[Pasted image 20240728124424.png]]
+
+Instead of taking derivative from theta to theta + epsilon. We take the derivative from -epsilon to +epsilon
+
+## Gradient Checking
+
+Take all W and b vectors and combine them into one large vector called theta.
+J(W1,b1,W2,b2....Wn,bn) = J(theta)
+Take all dW and db vectors and combine them into one large vector called dTheta.
+
+![[Pasted image 20240728125438.png]]
+
+
+![[Pasted image 20240728131713.png]]
