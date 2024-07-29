@@ -16,21 +16,22 @@ def read_emg_data(file_path):
     for line in lines:
         line = line.strip()
         if line:
-
+            # Process line only if it's not empty
             magnitudes = list(map(float, line.split(',')))
             current_example.append(magnitudes)
         else:
+            # End of current training example
             if len(current_example) == 128:
                 data.append(current_example)
                 current_example = []
     
-
+    # Add the last example if there is no trailing empty line
     if len(current_example) == 128:
         data.append(current_example)
     
     return data
 
-
+# Function to write data to a CSV file.
 def write_to_csv(file_path, data):
     with open(file_path, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
@@ -39,7 +40,7 @@ def write_to_csv(file_path, data):
             reshaped_example = np.array(example).reshape(128, 3)
             for row in reshaped_example:
                 csv_writer.writerow(row)
-            csv_writer.writerow([]) # keeping a row empty to show the end of a training example
+            csv_writer.writerow([])  # Add a blank line to separate training examples
 
 def main():
     # Read EMG data from the text file.
