@@ -10,8 +10,6 @@
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
 #define SAMPLE_RATE 300
-/*GPIO 34*/
-#define INPUT_PIN ADC1_CHANNEL_6
 #define FFT_SIZE 256 // Must be a power of 2
 #define BUFFER_SIZE 128
 #define MAGNITUDE_THRESHOLD 0.01
@@ -35,15 +33,21 @@ float bandpass_filter_75_150(float input);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
-// void print_colored_magnitude(int frequency_bin, float magnitude);
 void print_colored_magnitude();
 
 void emg();
 
+// ADC channels for the 3 sensors
+#define INPUT_PIN1 ADC1_CHANNEL_6
+#define INPUT_PIN2 ADC1_CHANNEL_7
+#define INPUT_PIN3 ADC1_CHANNEL_0
+
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
 
-static complex_t samples[FFT_SIZE];
+static complex_t samples1[FFT_SIZE];
+static complex_t samples2[FFT_SIZE];
+static complex_t samples3[FFT_SIZE];
 static int sample_index = 0;
 
 void app_main(void)
@@ -53,65 +57,65 @@ void app_main(void)
 
 void emg()
 {
-    // Configure ADC width and channel attenuation
+    // Configure ADC width and channel attenuation for all three channels
     adc1_config_width(ADC_WIDTH_BIT_12);
-    adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN1, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN2, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN3, ADC_ATTEN_DB_11);
     printf("START\n");
 
     while (1)
     {
         if (sample_index < FFT_SIZE)
         {
-            int sensor_value = adc1_get_raw(INPUT_PIN);
-            sensor_value = bound(sensor_value, 0, 4095);
-            sensor_value = map(sensor_value, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
-            float signal = bandpass_filter_75_150(sensor_value);
-            samples[sample_index].real = signal;
-            samples[sample_index].imag = 0;
+            // Read sensor values
+            int sensor_value1 = adc1_get_raw(INPUT_PIN1);
+            int sensor_value2 = adc1_get_raw(INPUT_PIN2);
+            int sensor_value3 = adc1_get_raw(INPUT_PIN3);
+
+            // Apply bound and map functions
+            sensor_value1 = bound(sensor_value1, 0, 4095);
+            sensor_value2 = bound(sensor_value2, 0, 4095);
+            sensor_value3 = bound(sensor_value3, 0, 4095);
+
+            sensor_value1 = map(sensor_value1, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
+            sensor_value2 = map(sensor_value2, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
+            sensor_value3 = map(sensor_value3, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
+
+            // Apply bandpass filter
+            float signal1 = bandpass_filter_75_150(sensor_value1);
+            float signal2 = bandpass_filter_75_150(sensor_value2);
+            float signal3 = bandpass_filter_75_150(sensor_value3);
+
+            // Store the signals in their respective arrays
+            samples1[sample_index].real = signal1;
+            samples1[sample_index].imag = 0;
+            samples2[sample_index].real = signal2;
+            samples2[sample_index].imag = 0;
+            samples3[sample_index].real = signal3;
+            samples3[sample_index].imag = 0;
+
             sample_index++;
         }
         else
         {
-
-            apply_hanning_window(samples, FFT_SIZE);
-            fft(samples, FFT_SIZE);
+            // Print the magnitude of each sample
             print_colored_magnitude();
-            // for (int i = 0; i < FFT_SIZE / 2; i++)
-            // {
-            //     float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-            //     print_colored_magnitude(i, magnitude);
-            // }
+
             sample_index = 0; // Reset sample index for the next set of samples
         }
     }
 }
-// void print_colored_magnitude(int frequency_bin, float magnitude)
+
 void print_colored_magnitude()
 {
-    // const char *color;
-    // if (magnitude < 10)
-    // {
-    //     color = ANSI_COLOR_GREEN;
-    // }
-    // else if (magnitude < 130)
-    // {
-    //     color = ANSI_COLOR_BLUE;
-    // }
-    // else if (magnitude < 200)
-    // {
-    //     color = ANSI_COLOR_ORANGE;
-    // }
-    // else
-    // {
-    //     color = ANSI_COLOR_RED;
-    // }
-
-    // printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
-
     for (int i = 0; i < FFT_SIZE / 2; i++)
     {
-        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-        printf("%.2f,", magnitude);
+        float magnitude1 = sqrt(samples1[i].real * samples1[i].real + samples1[i].imag * samples1[i].imag);
+        float magnitude2 = sqrt(samples2[i].real * samples2[i].real + samples2[i].imag * samples2[i].imag);
+        float magnitude3 = sqrt(samples3[i].real * samples3[i].real + samples3[i].imag * samples3[i].imag);
+
+        printf("%.2f,%.2f,%.2f\n", magnitude1, magnitude2, magnitude3);
     }
     printf("\n"); // End of line for the next set of data
 }
