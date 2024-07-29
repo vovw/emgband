@@ -95,35 +95,35 @@ void emg()
         }
     }
 }
-void print_colored_magnitude(int frequency_bin, float magnitude)
-// void print_colored_magnitude()
+// void print_colored_magnitude(int frequency_bin, float magnitude)
+void print_colored_magnitude()
 {
-    const char *color;
-    if (magnitude < 10)
-    {
-        color = ANSI_COLOR_GREEN;
-    }
-    else if (magnitude < 130)
-    {
-        color = ANSI_COLOR_BLUE;
-    }
-    else if (magnitude < 200)
-    {
-        color = ANSI_COLOR_ORANGE;
-    }
-    else
-    {
-        color = ANSI_COLOR_RED;
-    }
-
-    printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
-
-    // for (int i = 0; i < FFT_SIZE / 2; i++)
+    // const char *color;
+    // if (magnitude < 10)
     // {
-    //     float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-    //     printf("%.2f,", magnitude);
+    //     color = ANSI_COLOR_GREEN;
     // }
-    // printf("\n"); // End of line for the next set of data
+    // else if (magnitude < 130)
+    // {
+    //     color = ANSI_COLOR_BLUE;
+    // }
+    // else if (magnitude < 200)
+    // {
+    //     color = ANSI_COLOR_ORANGE;
+    // }
+    // else
+    // {
+    //     color = ANSI_COLOR_RED;
+    // }
+
+    // printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
+
+    for (int i = 0; i < FFT_SIZE / 2; i++)
+    {
+        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
+        printf("%.2f,", magnitude);
+    }
+    printf("\n"); // End of line for the next set of data
 }
 
 void update_storage()
