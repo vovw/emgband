@@ -35,8 +35,9 @@ float bandpass_filter_75_150(float input);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
+// void print_colored_magnitude(int frequency_bin, float magnitude);
 void print_colored_magnitude();
-void update_storage();
+
 void emg();
 
 int circular_buffer[BUFFER_SIZE];
@@ -55,7 +56,7 @@ void emg()
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-    printf("setup\n");
+    printf("START\n");
 
     while (1)
     {
@@ -74,23 +75,12 @@ void emg()
 
             apply_hanning_window(samples, FFT_SIZE);
             fft(samples, FFT_SIZE);
-            int save_to_file = 0;
-            printf("START\n");
-            for (int i = 0; i < FFT_SIZE / 2; i++)
-            {
-                float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-                print_colored_magnitude(i, magnitude);
-                if (magnitude > MAGNITUDE_THRESHOLD)
-                {
-                    save_to_file = 1;
-                }
-            }
-            if (save_to_file)
-            {
-                update_storage();
-            }
-            // print_colored_magnitude();
-
+            print_colored_magnitude();
+            // for (int i = 0; i < FFT_SIZE / 2; i++)
+            // {
+            //     float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
+            //     print_colored_magnitude(i, magnitude);
+            // }
             sample_index = 0; // Reset sample index for the next set of samples
         }
     }
@@ -124,41 +114,6 @@ void print_colored_magnitude()
         printf("%.2f,", magnitude);
     }
     printf("\n"); // End of line for the next set of data
-}
-
-void update_storage()
-{
-    printf("SPIFFS function called");
-    esp_vfs_spiffs_conf_t config = {
-        .base_path = "/storage",
-        .partition_label = NULL,
-        .max_files = 5,
-        .format_if_mount_failed = true,
-    };
-
-    esp_err_t result = esp_vfs_spiffs_register(&config);
-    if (result != ESP_OK)
-    {
-        printf("Failed to initialize spiffs");
-        return;
-    }
-
-    FILE *file = fopen("/storage/finger_movements.txt", "a");
-    if (file == NULL)
-    {
-        printf("Problem opening the file");
-        esp_vfs_spiffs_unregister(config.partition_label);
-        return;
-    }
-
-    for (int i = 0; i < FFT_SIZE / 2; i++)
-    {
-        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-        printf("added value to the file");
-        fprintf(file, "%.2f,", magnitude);
-    }
-    fclose(file);
-    esp_vfs_spiffs_unregister(config.partition_label);
 }
 
 float bound(float value, float low, float high)
