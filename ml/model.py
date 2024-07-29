@@ -3,43 +3,51 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-# Load data from text files
-def load_data(file_paths):
+
+
+
+def load_data(file_paths, file_labels):
     data = []
     labels = []
-    for label, file_path in file_paths.items():
+
+    for file_path, label in zip(file_paths, file_labels):
         with open(file_path, 'r') as file:
             lines = file.readlines()
-            # Find the index of "START"
-            start_index = lines.index("START\n") + 1
-            # Assume the data ends at the end of the file if "DONE" is not found
-            done_index = None
-            for i, line in enumerate(lines):
-                if "DONE\n" in line:
-                    done_index = i
-                    break
-            if done_index is None:
-                done_index = len(lines)
-            for line in lines[start_index:done_index]:
-                try:
-                    readings = list(map(float, line.strip().split(',')))
-                    data.append(readings)
-                    labels.append(label)
-                except ValueError:
-                    # Skip lines that cannot be converted to float readings
-                    print(f"Skipping line: {line}")
+            for line in lines:
+                # Skip the START keyword
+                if "START" in line:
                     continue
+                # Split the line into values and convert to float
+                values = line.strip().split(',')
+                if values:
+                    data.append([float(value) for value in values if value])
+                    labels.append(label)
+    
     if not data:
         raise ValueError("No data loaded. Please check your data files.")
-    return np.array(data), np.array(labels)
+    
+    data = np.array(data)
+    labels = np.array(labels)
+    
+    return data, labels
 
-file_paths = {
-    'claw': 'data/claw.txt',
-    'index': 'data/index.txt',
-    'idle': 'idle.txt'
-}
+file_paths = [
+    'data/claw.txt',
+    'data/index.txt',
+    'data/idle.txt'
+]
 
-data, labels = load_data(file_paths)
+file_labels = [
+    'claw',
+    'index',
+    'idle'
+]
+
+data, labels = load_data(file_paths, file_labels)
+
+print("Data Shape:", data.shape)
+print("Labels Shape:", labels.shape)
+print("Labels:", labels)
 
 # Encode labels
 label_encoder = LabelEncoder()
@@ -62,7 +70,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train the model
-model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2)
+model.fit(X_train, y_train, epochs=1000, batch_size=32, validation_split=0.2)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, y_test)
