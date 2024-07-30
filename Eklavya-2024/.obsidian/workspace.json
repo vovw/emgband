@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
+                "file": "EMG-armband/Improving Deep NN/Week 1.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
+                "file": "EMG-armband/Improving Deep NN/Week 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
+                "file": "EMG-armband/Improving Deep NN/Week 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md"
+                "file": "EMG-armband/Improving Deep NN/Week 1.md"
               }
             }
           }
@@ -162,6 +162,7 @@
   },
   "active": "a61060cd794079e7",
   "lastOpenFiles": [
+    "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
     "assets/Pasted image 20240729233645.png",
     "assets/Pasted image 20240729233628.png",
     "assets/Pasted image 20240729232830.png",
@@ -170,12 +171,10 @@
     "assets/Pasted image 20240729231432.png",
     "EMG-armband/Improving Deep NN/Week 1.md",
     "EMG-armband/EMG Amplifier.md",
-    "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
     "assets/Pasted image 20240728234641.png",
     "assets/Pasted image 20240728233738.png",
     "assets/Pasted image 20240728233440.png",
     "assets/Pasted image 20240728231522.png",
-    "assets/Pasted image 20240728231016.png",
     "EMG-armband/Operational Amplifiers.md",
     "Embedded Systems and C workshop.md",
     "Bi-Weekly Meet 2.md",

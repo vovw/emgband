@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
+from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
@@ -52,7 +52,13 @@ print("Labels:", labels)
 # Encode labels
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
-labels = to_categorical(labels)  # One-hot encode labels
+
+# Convert labels to one-hot encoding
+num_classes = len(label_encoder.classes_)
+labels = tf.keras.utils.to_categorical(labels, num_classes=num_classes)
+
+# Reshape data for LSTM
+data = np.expand_dims(data, axis=-1)  # Add a channel dimension
 
 # Split data into training and testing sets
 X_train, X_test, Y_train, Y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
@@ -62,22 +68,24 @@ print("Y_train shape:", Y_train.shape)
 print("Y_test shape:", Y_test.shape)
 
 # Build the model
-model = Sequential([
-    Dense(128, activation='relu', input_shape=(X_train.shape[1],)),
-    Dropout(0.3),
+model = tf.keras.Sequential([
+    Input(shape=(128,1)),  # Input shape for LSTM (time steps, features)
+    LSTM(64, return_sequences=True),
+    Dropout(0.2),
+    LSTM(64),
+    Dropout(0.2),
     Dense(64, activation='relu'),
-    Dropout(0.3),
-    Dense(32, activation='relu'),
-    Dropout(0.3),
-    Dense(Y_train.shape[1], activation='softmax')  # Number of classes
+    Dense(num_classes, activation='softmax')  # Number of classes
 ])
 
-# Compile the model
+
+
+# Compile the model with the fixed learning rate optimizer
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
 # Train the model
-history = model.fit(X_train, Y_train, epochs=1000, batch_size=32, validation_split=0.2)
+history = model.fit(X_train, Y_train, epochs=50, batch_size=32, validation_split=0.2)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, Y_test)
