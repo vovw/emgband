@@ -70,3 +70,26 @@ This becomes a weighted average and removes the bias. This is significant for wh
  We basically perform the moving average on the gradients we get from normal gradient descent. 
  V(dw) = BV(dw) + (1-B)dW
  and then W = W - a* V(dw)
+![[Pasted image 20240729231432.png]]
+
+
+# RMSprop
+
+![[Pasted image 20240729232012.png]]
+
+# Adam optimization Algorithm
+
+ADAM: Adaptive moment Optimization
+
+![[Pasted image 20240729232659.png]]
+
+## Hyperparameters choice:
+
+![[Pasted image 20240729232830.png]]
+
+# Learning Rate Decay
+
+![[Pasted image 20240729233628.png]]
+
+![[Pasted image 20240729233645.png]]
+
