@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "esp_spiffs.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/adc.h"
 #include "esp_timer.h"
-
-
 
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
@@ -15,13 +14,14 @@
 #define INPUT_PIN ADC1_CHANNEL_6
 #define FFT_SIZE 256 // Must be a power of 2
 #define BUFFER_SIZE 128
+#define MAGNITUDE_THRESHOLD 0.01
 
 // ANSI color codes
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_ORANGE  "\x1b[33m"
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_BLUE "\x1b[34m"
+#define ANSI_COLOR_ORANGE "\x1b[33m"
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 
 typedef struct
 {
@@ -35,9 +35,9 @@ float bandpass_filter_75_150(float input);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
-void print_colored_magnitude(int frequency_bin, float magnitude);
+void print_colored_magnitude();
+void update_storage();
 void emg();
-
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
@@ -45,17 +45,16 @@ int data_index = 0, sum = 0;
 static complex_t samples[FFT_SIZE];
 static int sample_index = 0;
 
-
 void app_main(void)
 {
-	xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+    xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
 }
 
-void emg(){
+void emg()
+{
     // Configure ADC width and channel attenuation
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
-
     printf("setup\n");
 
     while (1)
@@ -72,35 +71,83 @@ void emg(){
         }
         else
         {
+
             apply_hanning_window(samples, FFT_SIZE);
             fft(samples, FFT_SIZE);
+            int save_to_file = 0;
+            printf("START\n");
             for (int i = 0; i < FFT_SIZE / 2; i++)
             {
                 float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
                 print_colored_magnitude(i, magnitude);
+                if (magnitude > MAGNITUDE_THRESHOLD)
+                {
+                    save_to_file = 1;
+                }
             }
+            if (save_to_file)
+            {
+                update_storage();
+            }
+            // print_colored_magnitude();
 
-            sample_index = 0; // Reset sample index for next set of samples
+            sample_index = 0; // Reset sample index for the next set of samples
         }
-
     }
-
 }
-void print_colored_magnitude(int frequency_bin, float magnitude)
+// void print_colored_magnitude(int frequency_bin, float magnitude)
+void print_colored_magnitude()
 {
-    const char* color;
-    if (magnitude < 10) {
-        color = ANSI_COLOR_GREEN;
-    } else if (magnitude < 130) {
-        color = ANSI_COLOR_BLUE;
-    } else if (magnitude < 200) {
-        color = ANSI_COLOR_ORANGE;
-    } else {
-        color = ANSI_COLOR_RED;
+    // const char *color;
+    // if (magnitude < 10)
+    // {
+    //     color = ANSI_COLOR_GREEN;
+    // }
+    // else if (magnitude < 130)
+    // {
+    //     color = ANSI_COLOR_BLUE;
+    // }
+    // else if (magnitude < 200)
+    // {
+    //     color = ANSI_COLOR_ORANGE;
+    // }
+    // else
+    // {
+    //     color = ANSI_COLOR_RED;
+    // }
+
+    // printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
+
+    for (int i = 0; i < FFT_SIZE / 2; i++)
+    {
+        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
+        printf("%.2f,", magnitude);
     }
-    
-    printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
+    printf("\n"); // End of line for the next set of data
 }
+
+void update_storage()
+{
+
+
+    FILE *file = fopen("/storage/finger_movements.txt", "a");
+    if (file == NULL)
+    {
+        printf("Problem opening the file");
+        esp_vfs_spiffs_unregister(config.partition_label);
+        return;
+    }
+
+    for (int i = 0; i < FFT_SIZE / 2; i++)
+    {
+        float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
+        printf("added value to the file");
+        fprintf(file, "%.2f,", magnitude);
+    }
+    fclose(file);
+    esp_vfs_spiffs_unregister(config.partition_label);
+}
+
 float bound(float value, float low, float high)
 {
     if (value < low)
@@ -213,5 +260,4 @@ void bit_reverse(complex_t *x, int n)
         }
     }
 }
-
 

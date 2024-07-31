@@ -3,8 +3,10 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-
-
+"""
+data loading
+- make sure that your files dont have "START" "DONE" tags at start and end
+"""
 
 def load_data(file_paths, file_labels):
     data = []
@@ -24,7 +26,7 @@ def load_data(file_paths, file_labels):
                     labels.append(label)
     
     if not data:
-        raise ValueError("No data loaded. Please check your data files.")
+        raise ValueError("no data loaded")
     
     data = np.array(data)
     labels = np.array(labels)
@@ -33,8 +35,8 @@ def load_data(file_paths, file_labels):
 
 file_paths = [
     'data/claw.txt',
-    'data/index.txt',
-    'data/idle.txt'
+    'data/index_finger.txt',
+    'data/idel.txt'
 ]
 
 file_labels = [
@@ -49,33 +51,45 @@ print("Data Shape:", data.shape)
 print("Labels Shape:", labels.shape)
 print("Labels:", labels)
 
-# Encode labels
+"""
+Encode labels
+"""
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
 
-# Split data into training and testing sets
+"""
+train test split
+"""
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
 
-# Build the model
+
+"""
+layering the model
+"""
 model = tf.keras.Sequential([
     tf.keras.layers.InputLayer(input_shape=(128,)),
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(32, activation='relu'),
     tf.keras.layers.Dense(3, activation='softmax')  # 3 classes: claw, index, idle
 ])
 
-# Compile the model
+"""
+model compilation
+- adam optmizer https://arxiv.org/pdf/1412.6980
+- loss https://www.tensorflow.org/api_docs/python/tf/keras/losses/SparseCategoricalCrossentropy
+"""
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-
-# Train the model
+"""
+train
+evalulate
+save
+"""
 model.fit(X_train, y_train, epochs=1000, batch_size=32, validation_split=0.2)
 
-# Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {test_acc}')
 
-# Save the model
 model.save('emg_moment_prediction_model.h5')
-

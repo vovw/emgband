@@ -1,0 +1,12 @@
+dataset
+
+
+
+
+
+
+- setup venv
+# to train the model
+- python3 model.py 
+# to run the inference of the model
+- python3 run.py
