@@ -33,13 +33,13 @@ def load_data(file_paths, file_labels):
 
 file_paths = [
     '../claw_voltages.txt',
-    # '../index_voltages.txt',
+    '../index_voltages.txt',
     '../idle.txt'
 ]
 
 file_labels = [
     'claw',
-    # 'index',
+    'index',
     'idle'
 ]
 
@@ -73,11 +73,11 @@ model = Sequential([
 ])
 
 # Compile the model
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
 # Train the model
-history = model.fit(X_train, Y_train, epochs=1000, batch_size=32, validation_split=0.2)
+history = model.fit(X_train, Y_train, epochs=500, batch_size=32, validation_split=0.2)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, Y_test)

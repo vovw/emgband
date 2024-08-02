@@ -273,16 +273,16 @@ void print_beauty(float magnitude);
 void emg();
 
 // ADC channels for the 3 sensors
-#define INPUT_PIN1 ADC1_CHANNEL_6
-// #define INPUT_PIN2 ADC1_CHANNEL_7
-// #define INPUT_PIN3 ADC1_CHANNEL_0
+#define INPUT_PIN1 ADC1_CHANNEL_6 // pin 34
+#define INPUT_PIN2 ADC1_CHANNEL_7 // pin 35
+#define INPUT_PIN3 ADC1_CHANNEL_0 // pin 36
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
 
 static complex_t samples1[FFT_SIZE];
-// static complex_t samples2[FFT_SIZE];
-// static complex_t samples3[FFT_SIZE];
+static complex_t samples2[FFT_SIZE];
+static complex_t samples3[FFT_SIZE];
 static int sample_index = 0;
 
 void app_main(void)
@@ -295,8 +295,8 @@ void emg()
     // Configure ADC width and channel attenuation for all three channels
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN1, ADC_ATTEN_DB_11);
-    // adc1_config_channel_atten(INPUT_PIN2, ADC_ATTEN_DB_11);
-    // adc1_config_channel_atten(INPUT_PIN3, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN2, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN3, ADC_ATTEN_DB_11);
     printf("START\n");
 
     while (1)
@@ -304,12 +304,17 @@ void emg()
         if (sample_index < FFT_SIZE)
         {
             // Read sensor values
-            int sensor_value1 = adc1_get_raw(INPUT_PIN1);
-            // int sensor_value2 = adc1_get_raw(INPUT_PIN2);
-            // int sensor_value3 = adc1_get_raw(INPUT_PIN3);
+            float sensor_value1 = (float)adc1_get_raw(INPUT_PIN1);
+            float sensor_value2 = (float)adc1_get_raw(INPUT_PIN2);
+            float sensor_value3 = (float)adc1_get_raw(INPUT_PIN3);
+
+            // output of 0 - 4095
+            sensor_value1 = sensor_value1 * 2.45 / 4095;
+            sensor_value2 = sensor_value2 * 2.45 / 4095;
+            sensor_value3 = sensor_value3 * 2.45 / 4095;
 
             // Apply bound and map functions
-            sensor_value1 = bound(sensor_value1, 0, 4095);
+            // sensor_value1 = bound(sensor_value1, 0, 4095);
             // sensor_value2 = bound(sensor_value2, 0, 4095);
             // sensor_value3 = bound(sensor_value3, 0, 4095);
 
@@ -320,16 +325,16 @@ void emg()
             // Apply bandpass filter
             float signal1 = bandpass_filter_75_150(sensor_value1);
             // float signal1 = sensor_value1;
-            // float signal2 = bandpass_filter_75_150(sensor_value2);
-            // float signal3 = bandpass_filter_75_150(sensor_value3);
+            float signal2 = bandpass_filter_75_150(sensor_value2);
+            float signal3 = bandpass_filter_75_150(sensor_value3);
 
             // Store the signals in their respective arrays
             samples1[sample_index].real = signal1;
             samples1[sample_index].imag = 0;
-            // samples2[sample_index].real = signal2;
-            // samples2[sample_index].imag = 0;
-            // samples3[sample_index].real = signal3;
-            // samples3[sample_index].imag = 0;
+            samples2[sample_index].real = signal2;
+            samples2[sample_index].imag = 0;
+            samples3[sample_index].real = signal3;
+            samples3[sample_index].imag = 0;
 
             sample_index++;
         }
@@ -349,12 +354,12 @@ void print_colored_magnitude()
     {
         float magnitude1 = sqrt(samples1[i].real * samples1[i].real + samples1[i].imag * samples1[i].imag);
         // float magnitude1 = samples1[i].real;
-        // float magnitude2 = sqrt(samples2[i].real * samples2[i].real + samples2[i].imag * samples2[i].imag);
-        // float magnitude3 = sqrt(samples3[i].real * samples3[i].real + samples3[i].imag * samples3[i].imag);
+        float magnitude2 = sqrt(samples2[i].real * samples2[i].real + samples2[i].imag * samples2[i].imag);
+        float magnitude3 = sqrt(samples3[i].real * samples3[i].real + samples3[i].imag * samples3[i].imag);
 
         // printf("%.2f\n", magnitude1);
         print_beauty(magnitude1);
-        // printf("%.2f,%.2f,%.2f\n", magnitude1, magnitude2, magnitude3);
+        printf("%.2f,%.2f,%.2f\n", magnitude1, magnitude2, magnitude3);
     }
     printf("\n"); // End of line for the next set of data
 }

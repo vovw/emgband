@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
+from tensorflow.keras.layers import Conv1D, LSTM, Dense, Dropout, Input
 from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -70,6 +70,7 @@ print("Y_test shape:", Y_test.shape)
 # Build the model
 model = tf.keras.Sequential([
     Input(shape=(128,1)),  # Input shape for LSTM (time steps, features)
+    # Conv1D(32, kernel_size=3, activation='relu'),  # Conv1D layer
     LSTM(64, return_sequences=True),
     Dropout(0.2),
     LSTM(64),
@@ -78,10 +79,8 @@ model = tf.keras.Sequential([
     Dense(num_classes, activation='softmax')  # Number of classes
 ])
 
-
-
 # Compile the model with the fixed learning rate optimizer
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
 # Train the model
