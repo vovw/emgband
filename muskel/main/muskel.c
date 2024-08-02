@@ -1,27 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <math.h>
+#include "esp_spiffs.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/adc.h"
 #include "esp_timer.h"
 
-
-
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
 #define SAMPLE_RATE 300
-/*GPIO 34*/
-#define INPUT_PIN ADC1_CHANNEL_6
-#define FFT_SIZE 256 // Must be a power of 2
+#define FFT_SIZE 1280 // Must be a power of 2
 #define BUFFER_SIZE 128
+#define MAGNITUDE_THRESHOLD 0.01
 
 // ANSI color codes
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_ORANGE  "\x1b[33m"
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_BLUE "\x1b[34m"
+#define ANSI_COLOR_ORANGE "\x1b[33m"
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 
 typedef struct
 {
@@ -35,71 +34,117 @@ float bandpass_filter_75_150(float input);
 void fft(complex_t *x, int n);
 void bit_reverse(complex_t *x, int n);
 void apply_hanning_window(complex_t *x, int n);
-void print_colored_magnitude(int frequency_bin, float magnitude);
+void print_colored_magnitude();
+void print_beauty(float magnitude);
+
 void emg();
 
+// ADC channels for the 3 sensors
+#define INPUT_PIN1 ADC1_CHANNEL_6 // pin 34
+#define INPUT_PIN2 ADC1_CHANNEL_7 // pin 35
+#define INPUT_PIN3 ADC1_CHANNEL_0 // pin 36
 
 int circular_buffer[BUFFER_SIZE];
 int data_index = 0, sum = 0;
 
-static complex_t samples[FFT_SIZE];
+static complex_t samples1[FFT_SIZE];
+static complex_t samples2[FFT_SIZE];
+static complex_t samples3[FFT_SIZE];
 static int sample_index = 0;
-
 
 void app_main(void)
 {
-	xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+    xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
 }
 
-void emg(){
-    // Configure ADC width and channel attenuation
+static esp_timer_handle_t timer;
+static bool timer_expired = false;
+
+void timer_callback(void* arg)
+{
+    timer_expired = true;
+}
+
+void emg()
+{
+    // Configure ADC width and channel attenuation for all three channels
     adc1_config_width(ADC_WIDTH_BIT_12);
-    adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN1, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN2, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(INPUT_PIN3, ADC_ATTEN_DB_11);
+    printf("START\n");
 
-    printf("setup\n");
+    // Create and start the timer
+    esp_timer_create_args_t timer_args = {
+        .callback = &timer_callback,
+        .name = "one_second_timer"
+    };
+    ESP_ERROR_CHECK(esp_timer_create(&timer_args, &timer));
+    ESP_ERROR_CHECK(esp_timer_start_once(timer, 1000000)); // 1 second in microseconds
 
-    while (1)
+    while (!timer_expired)
     {
         if (sample_index < FFT_SIZE)
         {
-            int sensor_value = adc1_get_raw(INPUT_PIN);
-            sensor_value = bound(sensor_value, 0, 4095);
-            sensor_value = map(sensor_value, 0, 4095, CONSTRAIN_EMG_LOW, CONSTRAIN_EMG_HIGH);
-            float signal = bandpass_filter_75_150(sensor_value);
-            samples[sample_index].real = signal;
-            samples[sample_index].imag = 0;
+            // Read sensor values
+            float sensor_value1 = (float)adc1_get_raw(INPUT_PIN1);
+            float sensor_value2 = (float)adc1_get_raw(INPUT_PIN2);
+            float sensor_value3 = (float)adc1_get_raw(INPUT_PIN3);
+
+            // ... (keep the rest of the processing code)
+
             sample_index++;
         }
         else
         {
-            apply_hanning_window(samples, FFT_SIZE);
-            fft(samples, FFT_SIZE);
-            for (int i = 0; i < FFT_SIZE / 2; i++)
-            {
-                float magnitude = sqrt(samples[i].real * samples[i].real + samples[i].imag * samples[i].imag);
-                print_colored_magnitude(i, magnitude);
-            }
+            // Print the magnitude of each sample
+            print_colored_magnitude();
 
-            sample_index = 0; // Reset sample index for next set of samples
+            sample_index = 0; // Reset sample index for the next set of samples
         }
-
     }
 
+    // Clean up and exit
+    esp_timer_delete(timer);
+    printf("Stopping after 1 second\n");
+    vTaskDelete(NULL);
 }
-void print_colored_magnitude(int frequency_bin, float magnitude)
+
+
+
+void print_colored_magnitude()
 {
-    const char* color;
-    if (magnitude < 10) {
+    for (int i = 0; i < FFT_SIZE / 2; i++)
+    {
+        float magnitude1 = sqrt(samples1[i].real * samples1[i].real + samples1[i].imag * samples1[i].imag);
+        float magnitude2 = sqrt(samples2[i].real * samples2[i].real + samples2[i].imag * samples2[i].imag);
+        float magnitude3 = sqrt(samples3[i].real * samples3[i].real + samples3[i].imag * samples3[i].imag);
+
+        printf("%.2f,%.2f,%.2f\n", magnitude1, magnitude2, magnitude3);
+    }
+    printf("\n"); // End of line for the next set of data
+}
+void print_beauty(float magnitude)
+{
+    const char *color;
+    if (magnitude < 5)
+    {
         color = ANSI_COLOR_GREEN;
-    } else if (magnitude < 130) {
+    }
+    else if (magnitude < 10)
+    {
         color = ANSI_COLOR_BLUE;
-    } else if (magnitude < 200) {
+    }
+    else if (magnitude < 20)
+    {
         color = ANSI_COLOR_ORANGE;
-    } else {
+    }
+    else
+    {
         color = ANSI_COLOR_RED;
     }
-    
-    printf("%sFrequency bin %d: %.2f%s\n", color, frequency_bin, magnitude, ANSI_COLOR_RESET);
+    printf("%.2f,", magnitude);
+    // printf("%s %.2f%s\n", color, magnitude, ANSI_COLOR_RESET);
 }
 float bound(float value, float low, float high)
 {
@@ -213,5 +258,3 @@ void bit_reverse(complex_t *x, int n)
         }
     }
 }
-
-
