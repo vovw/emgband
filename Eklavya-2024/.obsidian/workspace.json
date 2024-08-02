@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "c61c2f9003e35b5a",
+        "id": "0ddb464f950d2624",
         "type": "tabs",
         "children": [
           {
-            "id": "a61060cd794079e7",
+            "id": "6b417a32807c41a9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 1.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c3cf6424fdb41f8e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EMG-armband/EMG Amplifier.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -97,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "EMG-armband/Improving Deep NN/Week 1.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -160,8 +140,11 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "a61060cd794079e7",
+  "active": "6b417a32807c41a9",
   "lastOpenFiles": [
+    "EMG-armband/Shaunak Notes.md",
+    "EMG-armband/EMG Amplifier.md",
+    "EMG-armband/Improving Deep NN/Week 1.md",
     "EMG-armband/Improving Deep NN/Week 2-Optimization Algorithms.md",
     "assets/Pasted image 20240729233645.png",
     "assets/Pasted image 20240729233628.png",
@@ -169,8 +152,6 @@
     "assets/Pasted image 20240729232659.png",
     "assets/Pasted image 20240729232012.png",
     "assets/Pasted image 20240729231432.png",
-    "EMG-armband/Improving Deep NN/Week 1.md",
-    "EMG-armband/EMG Amplifier.md",
     "assets/Pasted image 20240728234641.png",
     "assets/Pasted image 20240728233738.png",
     "assets/Pasted image 20240728233440.png",
@@ -187,7 +168,6 @@
     "EMG-armband/Neural Networks and Deep Learning/Week 4.md",
     "EMG-armband/Neural Networks and Deep Learning.md",
     "EMG-armband/Neural Networks and Deep Learning/Week 3.md",
-    "EMG-armband/Shaunak Notes.md",
     "assets",
     "attachements/attachements",
     "EMG-armband/MoM- 5-07-2024.md",

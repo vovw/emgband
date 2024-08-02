@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "esp_spiffs.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/adc.h"
-#include "esp_timer.h"
+#include "esp_adc_cal.h"
 
 #define CONSTRAIN_EMG_LOW 0
 #define CONSTRAIN_EMG_HIGH 1000
-#define FFT_SIZE 1280 // more than twise the number of readings the esp gets in one second
+#define FFT_SIZE 1280 // more than twise the number of readings the esp gets in one seconds
 
 // ANSI color codes
 #define ANSI_COLOR_GREEN "\x1b[32m"
@@ -40,6 +39,7 @@ static complex_t samples1[FFT_SIZE];
 static complex_t samples2[FFT_SIZE];
 static complex_t samples3[FFT_SIZE];
 static int sample_index = 0;
+static esp_adc_cal_characteristics_t *adc_chars;
 
 void app_main(void)
 {
@@ -68,9 +68,9 @@ void emg()
         if (sample_index < FFT_SIZE)
         {
             // Read sensor values
-            float sensor_value1 = adc1_get_raw(INPUT_PIN1);
-            float sensor_value2 = adc1_get_raw(INPUT_PIN2);
-            float sensor_value3 = adc1_get_raw(INPUT_PIN3);
+            int sensor_value1 = adc1_get_raw(INPUT_PIN1);
+            int sensor_value2 = adc1_get_raw(INPUT_PIN2);
+            int sensor_value3 = adc1_get_raw(INPUT_PIN3);
 
             // output of 0 - 4095
             float signal1 = sensor_value1 * 2.45 / 4095;
