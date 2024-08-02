@@ -73,9 +73,9 @@ void emg()
             int sensor_value3 = adc1_get_raw(INPUT_PIN3);
 
             // output of 0 - 4095
-            float signal1 = sensor_value1 * 2.45 / 4095;
-            float signal2 = sensor_value2 * 2.45 / 4095;
-            float signal3 = sensor_value3 * 2.45 / 4095;
+            float signal1 = esp_adc_cal_raw_to_voltage(sensor_value1, adc_chars);
+            float signal2 = esp_adc_cal_raw_to_voltage(sensor_value2, adc_chars);
+            float signal3 = esp_adc_cal_raw_to_voltage(sensor_value3, adc_chars);
 
             // Apply bandpass filter
             // float signal1 = sensor_value1;
