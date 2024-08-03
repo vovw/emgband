@@ -1,7 +1,8 @@
 # EMG Armband, The Conclusion | sra-vjti
-![Avatar](https://github.com/sra-vjti.png) The Society of Robotics and Automation is a society for VJTI students.
+![Avatar](https://github.com/sra-vjti.png) 
+- The Society of Robotics and Automation is a society for VJTI students.
 
-Developing an EMG system that can understand human hand motions.
+### Developing an EMG system that can understand human hand motions.
 
 ![up](https://blog.sravjti.in/assets/posts/emg-armband/upside_down.svg)
 
