@@ -19,6 +19,7 @@ static float EMGFilter(float input);
 void emg(void);
 void plotASCII(int value, int min, int max, int width);
 
+
 const TickType_t xDelay = 1000 / SAMPLE_RATE / portTICK_PERIOD_MS;
 
 
