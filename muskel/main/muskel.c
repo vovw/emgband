@@ -5,8 +5,10 @@
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 
-#define SAMPLE_RATE 500
-#define INPUT_PIN ADC1_CHANNEL_6
+#define SAMPLE_RATE 200
+#define INPUT_PIN1 ADC1_CHANNEL_6 // pin 34
+#define INPUT_PIN2 ADC1_CHANNEL_7 // pin 35
+#define INPUT_PIN3 ADC1_CHANNEL_4 // pin 32
 #define BUFFER_SIZE 64
 
 static int circular_buffer[BUFFER_SIZE];
@@ -37,17 +39,31 @@ void emg(void)
     while (1) {
 	vTaskDelay(xDelay);
 
-        int adc_reading = adc1_get_raw(INPUT_PIN);
-        int voltage = esp_adc_cal_raw_to_voltage(adc_reading, &adc_chars);
+        int adc_reading1 = adc1_get_raw(INPUT_PIN1);
+        int adc_reading2 = adc1_get_raw(INPUT_PIN2);
+        int adc_reading3 = adc1_get_raw(INPUT_PIN3);
+        int adc_reading4 = adc1_get_raw(INPUT_PIN4);
+
+        int voltage1 = esp_adc_cal_raw_to_voltage(adc_reading1, &adc_chars);
+        int voltage2 = esp_adc_cal_raw_to_voltage(adc_reading2, &adc_chars);
+        int voltage3 = esp_adc_cal_raw_to_voltage(adc_reading3, &adc_chars);
+        int voltage4 = esp_adc_cal_raw_to_voltage(adc_reading4, &adc_chars);
+
 
 	// TODO : check and confront this
         // Convert voltage to original Arduino's 0-1023 scale
-        int sensor_value = (voltage * 1023) / 4095;
+        int sensor_value1 = (voltage1 * 1023) / 4095;
+        int sensor_value2 = (voltage2 * 1023) / 4095;
+        int sensor_value3 = (voltage3 * 1023) / 4095;
+        int sensor_value4 = (voltage4 * 1023) / 4095;
 
         // Filtered EMG
-        int signal = (int)EMGFilter((float)sensor_value);
+        int signal1 = EMGFilter((float)sensor_value1);
+        int signal2 = EMGFilter((float)sensor_value2);
+        int signal3 = EMGFilter((float)sensor_value3);
+        int signal4 = EMGFilter((float)sensor_value4);
 
-        printf("%d\n", signal);
+        printf("[%d, %d, %d, %d\n]", signal1, signal2, signal3, signal4);
     }
 }
 
@@ -94,6 +110,7 @@ float EMGFilter(float input)
     return output;
 }
 
+// TODO needs to be updated to make sure it works for 4 sensors are a time
 void plotASCII(int value, int min, int max, int width) {
     int range = max - min;
     int position = (value - min) * width / range;
