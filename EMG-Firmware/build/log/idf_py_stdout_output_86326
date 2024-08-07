@@ -1,0 +1,106 @@
+[1/10] Performing build step for 'bootloader'
+[1/1] cd /Users/shaunakdatar/emgband/EMG-Firmware/build/bootloader/esp-idf/esptool_py && /Users/shaunakdatar/.espressif/python_env/idf5.1_py3.12_env/bin/python /Users/shaunakdatar/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /Users/shaunakdatar/emgband/EMG-Firmware/build/bootloader/bootloader.bin
+Bootloader binary size 0x6870 bytes. 0x790 bytes (7%) free.
+[2/10] No install step for 'bootloader'
+[3/10] Completed 'bootloader'
+[4/10] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/emg.c.obj
+In file included from /Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:6:
+/Users/shaunakdatar/esp/esp-idf/components/driver/deprecated/driver/adc.h:19:2: warning: #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively" [-Wcpp]
+   19 | #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
+      |  ^~~~~~~
+In file included from /Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:7:
+/Users/shaunakdatar/esp/esp-idf/components/esp_adc/deprecated/include/esp_adc_cal.h:17:2: warning: #warning "legacy adc calibration driver is deprecated, please migrate to use esp_adc/adc_cali.h and esp_adc/adc_cali_scheme.h" [-Wcpp]
+   17 | #warning "legacy adc calibration driver is deprecated, please migrate to use esp_adc/adc_cali.h and esp_adc/adc_cali_scheme.h"
+      |  ^~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c: In function 'init_adc':
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:53:5: warning: 'ADC_ATTEN_DB_11' is deprecated [-Wdeprecated-declarations]
+   53 |     adc1_config_channel_atten(INPUT_PIN1, ADC_ATTEN_DB_11);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/shaunakdatar/esp/esp-idf/components/driver/deprecated/driver/adc_types_legacy.h:8,
+                 from /Users/shaunakdatar/esp/esp-idf/components/driver/deprecated/driver/adc.h:15:
+/Users/shaunakdatar/esp/esp-idf/components/hal/include/hal/adc_types.h:47:5: note: declared here
+   47 |     ADC_ATTEN_DB_11 __attribute__((deprecated)) = ADC_ATTEN_DB_12,  ///<This is deprecated, it behaves the same as `ADC_ATTEN_DB_12`
+      |     ^~~~~~~~~~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:54:5: warning: 'ADC_ATTEN_DB_11' is deprecated [-Wdeprecated-declarations]
+   54 |     adc1_config_channel_atten(INPUT_PIN2, ADC_ATTEN_DB_11);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/shaunakdatar/esp/esp-idf/components/hal/include/hal/adc_types.h:47:5: note: declared here
+   47 |     ADC_ATTEN_DB_11 __attribute__((deprecated)) = ADC_ATTEN_DB_12,  ///<This is deprecated, it behaves the same as `ADC_ATTEN_DB_12`
+      |     ^~~~~~~~~~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:55:5: warning: 'ADC_ATTEN_DB_11' is deprecated [-Wdeprecated-declarations]
+   55 |     adc1_config_channel_atten(INPUT_PIN3, ADC_ATTEN_DB_11);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/shaunakdatar/esp/esp-idf/components/hal/include/hal/adc_types.h:47:5: note: declared here
+   47 |     ADC_ATTEN_DB_11 __attribute__((deprecated)) = ADC_ATTEN_DB_12,  ///<This is deprecated, it behaves the same as `ADC_ATTEN_DB_12`
+      |     ^~~~~~~~~~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:58:5: warning: 'ADC_ATTEN_DB_11' is deprecated [-Wdeprecated-declarations]
+   58 |     esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, adc_chars);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/shaunakdatar/esp/esp-idf/components/hal/include/hal/adc_types.h:47:5: note: declared here
+   47 |     ADC_ATTEN_DB_11 __attribute__((deprecated)) = ADC_ATTEN_DB_12,  ///<This is deprecated, it behaves the same as `ADC_ATTEN_DB_12`
+      |     ^~~~~~~~~~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c: In function 'emg':
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:88:19: warning: unused variable 'signal3' [-Wunused-variable]
+   88 |             float signal3 = bandpass_filter_75_150(voltage3);
+      |                   ^~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:87:19: warning: unused variable 'signal2' [-Wunused-variable]
+   87 |             float signal2 = bandpass_filter_75_150(voltage2);
+      |                   ^~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c: In function 'print_colored_magnitude':
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:117:15: warning: unused variable 'magnitude3' [-Wunused-variable]
+  117 |         float magnitude3 = sqrt(samples3[i].real * samples3[i].real + samples3[i].imag * samples3[i].imag);
+      |               ^~~~~~~~~~
+/Users/shaunakdatar/emgband/EMG-Firmware/main/emg.c:116:15: warning: unused variable 'magnitude2' [-Wunused-variable]
+  116 |         float magnitude2 = sqrt(samples2[i].real * samples2[i].real + samples2[i].imag * samples2[i].imag);
+      |               ^~~~~~~~~~
+[5/10] Linking C static library esp-idf/main/libmain.a
+[6/10] Generating ld/sections.ld
+[7/10] Linking CXX executable lsa-example-app.elf
+[8/10] Generating binary image from built executable
+esptool.py v4.7.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated /Users/shaunakdatar/emgband/EMG-Firmware/build/lsa-example-app.bin
+[9/10] cd /Users/shaunakdatar/emgband/EMG-Firmware/build/esp-idf/esptool_py && /Users/shaunakdatar/.espressif/python_env/idf5.1_py3.12_env/bin/python /Users/shaunakdatar/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /Users/shaunakdatar/emgband/EMG-Firmware/build/partition_table/partition-table.bin /Users/shaunakdatar/emgband/EMG-Firmware/build/lsa-example-app.bin
+lsa-example-app.bin binary size 0x2d330 bytes. Smallest app partition is 0x100000 bytes. 0xd2cd0 bytes (82%) free.
+[9/10] cd /Users/shaunakdatar/esp/esp-idf/components/esptool_py && /opt/homebrew/Cellar/cmake/3.30.0/bin/cmake -D IDF_PATH=/Users/shaunakdatar/esp/esp-idf -D "SERIAL_TOOL=/Users/shaunakdatar/.espressif/python_env/idf5.1_py3.12_env/bin/python;;/Users/shaunakdatar/esp/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32" -D "SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args" -D WORKING_DIRECTORY=/Users/shaunakdatar/emgband/EMG-Firmware/build -P /Users/shaunakdatar/esp/esp-idf/components/esptool_py/run_serial_tool.cmake
+esptool.py --chip esp32 -p /dev/cu.usbserial-1110 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 40m --flash_size 4MB 0x1000 bootloader/bootloader.bin 0x10000 lsa-example-app.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.7.0
+Serial port /dev/cu.usbserial-1110
+Connecting....
+Chip is ESP32-D0WD (revision v1.0)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: ac:67:b2:72:a1:84
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Flash will be erased from 0x00010000 to 0x0003dfff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Compressed 26736 bytes to 16744...
+Writing at 0x00001000... (50 %)
+Writing at 0x0000769b... (100 %)
+Wrote 26736 bytes (16744 compressed) at 0x00001000 in 0.8 seconds (effective 279.1 kbit/s)...
+Hash of data verified.
+Compressed 185136 bytes to 103232...
+Writing at 0x00010000... (14 %)
+Writing at 0x0001c4a8... (28 %)
+Writing at 0x00021d8a... (42 %)
+Writing at 0x00027a05... (57 %)
+Writing at 0x0002de85... (71 %)
+Writing at 0x00035a19... (85 %)
+Writing at 0x0003b65b... (100 %)
+Wrote 185136 bytes (103232 compressed) at 0x00010000 in 2.8 seconds (effective 534.0 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.1 seconds (effective 367.1 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

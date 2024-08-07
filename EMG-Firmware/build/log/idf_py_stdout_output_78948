@@ -1,0 +1,54 @@
+-- IDF_TARGET is not set, guessed 'esp32' from sdkconfig '/Users/shaunakdatar/emgband/EMG-Firmware/sdkconfig'
+-- Found Git: /opt/homebrew/bin/git (found version "2.45.2")
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /Users/shaunakdatar/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Users/shaunakdatar/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Users/shaunakdatar/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32
+-- Project sdkconfig file /Users/shaunakdatar/emgband/EMG-Firmware/sdkconfig
+Loading defaults file /Users/shaunakdatar/emgband/EMG-Firmware/sdkconfig.defaults...
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of time_t
+-- Check size of time_t - done
+-- Found Python3: /Users/shaunakdatar/.espressif/python_env/idf5.1_py3.12_env/bin/python (found version "3.12.3") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - no
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Could NOT find Threads (missing: Threads_FOUND) 
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- App "lsa-example-app" version: fb4a48e-dirty
+-- Adding linker script /Users/shaunakdatar/emgband/EMG-Firmware/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_system/ld/esp32/sections.ld.in
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script /Users/shaunakdatar/esp/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_coex esp_common esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_system esp_timer esp_wifi espcoredump esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash openthread partition_table perfmon protobuf-c protocomm pthread sdmmc soc spi_flash spiffs tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: /Users/shaunakdatar/esp/esp-idf/components/app_trace /Users/shaunakdatar/esp/esp-idf/components/app_update /Users/shaunakdatar/esp/esp-idf/components/bootloader /Users/shaunakdatar/esp/esp-idf/components/bootloader_support /Users/shaunakdatar/esp/esp-idf/components/bt /Users/shaunakdatar/esp/esp-idf/components/cmock /Users/shaunakdatar/esp/esp-idf/components/console /Users/shaunakdatar/esp/esp-idf/components/cxx /Users/shaunakdatar/esp/esp-idf/components/driver /Users/shaunakdatar/esp/esp-idf/components/efuse /Users/shaunakdatar/esp/esp-idf/components/esp-tls /Users/shaunakdatar/esp/esp-idf/components/esp_adc /Users/shaunakdatar/esp/esp-idf/components/esp_app_format /Users/shaunakdatar/esp/esp-idf/components/esp_coex /Users/shaunakdatar/esp/esp-idf/components/esp_common /Users/shaunakdatar/esp/esp-idf/components/esp_eth /Users/shaunakdatar/esp/esp-idf/components/esp_event /Users/shaunakdatar/esp/esp-idf/components/esp_gdbstub /Users/shaunakdatar/esp/esp-idf/components/esp_hid /Users/shaunakdatar/esp/esp-idf/components/esp_http_client /Users/shaunakdatar/esp/esp-idf/components/esp_http_server /Users/shaunakdatar/esp/esp-idf/components/esp_https_ota /Users/shaunakdatar/esp/esp-idf/components/esp_https_server /Users/shaunakdatar/esp/esp-idf/components/esp_hw_support /Users/shaunakdatar/esp/esp-idf/components/esp_lcd /Users/shaunakdatar/esp/esp-idf/components/esp_local_ctrl /Users/shaunakdatar/esp/esp-idf/components/esp_mm /Users/shaunakdatar/esp/esp-idf/components/esp_netif /Users/shaunakdatar/esp/esp-idf/components/esp_netif_stack /Users/shaunakdatar/esp/esp-idf/components/esp_partition /Users/shaunakdatar/esp/esp-idf/components/esp_phy /Users/shaunakdatar/esp/esp-idf/components/esp_pm /Users/shaunakdatar/esp/esp-idf/components/esp_psram /Users/shaunakdatar/esp/esp-idf/components/esp_ringbuf /Users/shaunakdatar/esp/esp-idf/components/esp_rom /Users/shaunakdatar/esp/esp-idf/components/esp_system /Users/shaunakdatar/esp/esp-idf/components/esp_timer /Users/shaunakdatar/esp/esp-idf/components/esp_wifi /Users/shaunakdatar/esp/esp-idf/components/espcoredump /Users/shaunakdatar/esp/esp-idf/components/esptool_py /Users/shaunakdatar/esp/esp-idf/components/fatfs /Users/shaunakdatar/esp/esp-idf/components/freertos /Users/shaunakdatar/esp/esp-idf/components/hal /Users/shaunakdatar/esp/esp-idf/components/heap /Users/shaunakdatar/esp/esp-idf/components/http_parser /Users/shaunakdatar/esp/esp-idf/components/idf_test /Users/shaunakdatar/esp/esp-idf/components/ieee802154 /Users/shaunakdatar/esp/esp-idf/components/json /Users/shaunakdatar/esp/esp-idf/components/log /Users/shaunakdatar/esp/esp-idf/components/lwip /Users/shaunakdatar/emgband/EMG-Firmware/main /Users/shaunakdatar/esp/esp-idf/components/mbedtls /Users/shaunakdatar/esp/esp-idf/components/mqtt /Users/shaunakdatar/esp/esp-idf/components/newlib /Users/shaunakdatar/esp/esp-idf/components/nvs_flash /Users/shaunakdatar/esp/esp-idf/components/openthread /Users/shaunakdatar/esp/esp-idf/components/partition_table /Users/shaunakdatar/esp/esp-idf/components/perfmon /Users/shaunakdatar/esp/esp-idf/components/protobuf-c /Users/shaunakdatar/esp/esp-idf/components/protocomm /Users/shaunakdatar/esp/esp-idf/components/pthread /Users/shaunakdatar/esp/esp-idf/components/sdmmc /Users/shaunakdatar/esp/esp-idf/components/soc /Users/shaunakdatar/esp/esp-idf/components/spi_flash /Users/shaunakdatar/esp/esp-idf/components/spiffs /Users/shaunakdatar/esp/esp-idf/components/tcp_transport /Users/shaunakdatar/esp/esp-idf/components/ulp /Users/shaunakdatar/esp/esp-idf/components/unity /Users/shaunakdatar/esp/esp-idf/components/usb /Users/shaunakdatar/esp/esp-idf/components/vfs /Users/shaunakdatar/esp/esp-idf/components/wear_levelling /Users/shaunakdatar/esp/esp-idf/components/wifi_provisioning /Users/shaunakdatar/esp/esp-idf/components/wpa_supplicant /Users/shaunakdatar/esp/esp-idf/components/xtensa
+-- Configuring done (5.2s)
+-- Generating done (0.5s)
+-- Build files have been written to: /Users/shaunakdatar/emgband/EMG-Firmware/build
