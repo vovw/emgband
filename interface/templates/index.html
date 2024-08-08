@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Smoothie Charts</title>
+        <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/smoothie@1.35.0/smoothie.js"></script>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            td {
+                padding: 10px;
+                vertical-align: top;
+            }
+            canvas {
+                border: 1px solid #ccc;
+                margin: 20px;
+            }
+            .textbox {
+                width: 100%;
+                height: 125px;
+            }
+            #header {
+                display: flex;
+                align-items: center;
+            }
+            #gif-container {
+                margin-right: 20px;
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            .heading {
+                top: 10px;
+                right: 10px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .gif-container {
+                position: relative;
+                width: 30%;
+                height: 30%;
+            }
+            .gif-container img {
+                width: 100%;
+                height: 100%;
+            }
+            .buttons {
+                margin-top: 20px;
+            }
+            .buttons button {
+                margin: 5px;
+                padding: 10px;
+                font-size: 16px;
+            }
+            .blink {
+                animation: blinker linear infinite 2s;
+                background-color: red;
+            }
+            @keyframes blinker {
+                50% {
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <colgroup>
+                <col span="1" style="width: 25%" />
+                <col span="1" style="width: 30%" />
+                <col span="1" style="width: 45%" />
+            </colgroup>
+            <tr>
+                <td>
+                    <div class="gif-container">
+                        <img
+                            src="{{ url_for('static', filename='images/gif1.gif') }}"
+                            id="gif"
+                            alt="GIF"
+                        />
+                    </div>
+                </td>
+                <td>
+                    <div class="heading" id="heading">Move thumb</div>
+                    <h3>Subject Name:{{name}}</h3>
+                </td>
+                <td>
+                    <div class="buttons">
+                        <button id="btn1" class="blink">Ready</button>
+                        <button id="btn2">Move 1</button>
+                        <button id="btn3">Move 2</button>
+                        <button id="btn4">Move 3</button>
+                        <button id="btn5">Move 4</button>
+                        <button id="btn6">Move 5</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <center><button id="stopButton">Stop Recording</button></center>
+        <table>
+            <tr>
+                <td>
+                    <h4>Channel 1</h4>
+
+                    <canvas id="chart1" width="375" height="175"></canvas>
+                </td>
+                <td>
+                    <h4>Channel 2</h4>
+
+                    <canvas id="chart2" width="375" height="175"></canvas>
+                </td>
+
+                <td>
+                    <h4>Channel 3</h4>
+                    <canvas id="chart3" width="375" height="175"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Channel 4</h4>
+                    <canvas id="chart4" width="375" height="175"></canvas>
+                </td>
+                <!--
+            <td>
+                <h4>Channel 5</h4>
+                <canvas id="chart5" width="375" height="175"></canvas>
+            </td>
+            <td>
+                <h4>Channel 6</h4>
+                <canvas id="chart6" width="375" height="175"></canvas>
+            </td> -->
+            </tr>
+        </table>
+        <script type="text/javascript">
+            var gifs = {{ gifs | tojson | safe }};
+        </script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    </body>
+</html>

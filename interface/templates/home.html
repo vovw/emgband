@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>User Information</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            td {
+                padding: 10px;
+                vertical-align: top;
+            }
+            canvas {
+                border: 1px solid #ccc;
+                margin: 20px;
+            }
+            .textbox {
+                width: 100%;
+                height: 125px;
+            }
+            #header {
+                display: flex;
+                align-items: center;
+            }
+            #gif-container {
+                margin-right: 20px;
+            }
+        </style>
+        <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/smoothie@1.35.0/smoothie.js"></script>
+    </head>
+    <body>
+        <form id="userForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required /><br /><br />
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required /><br /><br />
+            <button type="submit">Submit</button>
+        </form>
+        <table>
+            <tr>
+                <td>
+                    <h4>Channel 1</h4>
+
+                    <canvas id="chart1" width="375" height="175"></canvas>
+                </td>
+                <td>
+                    <h4>Channel 2</h4>
+
+                    <canvas id="chart2" width="375" height="175"></canvas>
+                </td>
+
+                <td>
+                    <h4>Channel 3</h4>
+                    <canvas id="chart3" width="375" height="175"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Channel 4</h4>
+                    <canvas id="chart4" width="375" height="175"></canvas>
+                </td>
+                <!--
+            <td>
+                <h4>Channel 5</h4>
+                <canvas id="chart5" width="375" height="175"></canvas>
+            </td>
+            <td>
+                <h4>Channel 6</h4>
+                <canvas id="chart6" width="375" height="175"></canvas>
+            </td> -->
+            </tr>
+        </table>
+
+        <script src="{{ url_for('static', filename='js/app2.js') }}"></script>
+
+        <script>
+            var socket = io();
+
+            document
+                .getElementById("userForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    var name = document.getElementById("name").value;
+                    var age = document.getElementById("age").value;
+                    socket.emit("user_data", { name: name, age: age });
+                    window.location.href = "/next";
+                });
+        </script>
+    </body>
+</html>
