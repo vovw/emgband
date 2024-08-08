@@ -34,6 +34,7 @@ void emg(void);
 void plotASCII(int value, int min, int max, int width);
 void print_magnitudes();
 void web_server();
+esp_err_t get_handler(httpd_req_t *req);
 
 httpd_uri_t uri_get = {
     .uri = "/uri",
@@ -111,6 +112,18 @@ esp_err_t get_handler(httpd_req_t *req)
     return ESP_OK;
 }
 
+httpd_handle_t start_webserver(void)
+{
+    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+    httpd_handle_t server = NULL;
+
+    if (httpd_start(&server, &config) == ESP_OK)
+    {
+        httpd_register_uri_handler(server, &uri_get);
+    }
+    return server;
+}
+
 void web_server()
 {
     httpd_handle_t server = start_webserver();
@@ -122,18 +135,6 @@ void web_server()
     {
         ESP_LOGI("Web Server", "Web server started");
     }
-}
-
-httpd_handle_t start_webserver(void)
-{
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    httpd_handle_t server = NULL;
-
-    if (httpd_start(&server, &config) == ESP_OK)
-    {
-        httpd_register_uri_handler(server, &uri_get);
-    }
-    return server;
 }
 
 int getEnvelope(int abs_emg)
