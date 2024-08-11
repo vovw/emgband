@@ -98,7 +98,7 @@ void emg(void *pvParameters)
     }
 }
 
-void wifi_for_server(void)
+void wifi_handler(void)
 {
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
@@ -263,7 +263,7 @@ void print_magnitudes()
 
 void app_main(void)
 {
-    wifi_for_server();
+    wifi_handler();
     xTaskCreatePinnedToCore(emg, "does emg things", 4096, NULL, 1, NULL, 0);
     xTaskCreatePinnedToCore(web_server, "web server", 4096, NULL, 1, NULL, 1);
 }
