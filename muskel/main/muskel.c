@@ -4,7 +4,8 @@
 #include "driver/gpio.h"
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
-#include "esp_wifi.h"        // For Wi-Fi connectivity
+#include "esp_wifi.h" // For Wi-Fi connectivity
+#include "nvs_flash.h"
 #include "esp_http_server.h" // For the HTTP server
 #include "esp_log.h"         // For logging
 #include "esp_system.h"      // For system-related functions
@@ -16,6 +17,8 @@
 #define INPUT_PIN4 ADC1_CHANNEL_3 // Added a new channel
 #define BUFFER_SIZE 64
 #define SAMPLE_SIZE 1280
+#define WIFI_SSID "dekhlo_tum_hi"
+#define WIFI_PASS "mai_nahi_bataunga"
 
 static int circular_buffer[BUFFER_SIZE];
 static int samples1[SAMPLE_SIZE];
@@ -23,6 +26,7 @@ static int samples2[SAMPLE_SIZE];
 static int samples3[SAMPLE_SIZE];
 static int samples4[SAMPLE_SIZE]; // Added a new sample array
 static int sample_index = 0;
+static const char *TAG = "emgband_log";
 
 static int data_index = 0, sum = 0;
 
@@ -30,7 +34,7 @@ static esp_adc_cal_characteristics_t adc_chars;
 
 static int getEnvelope(int abs_emg);
 static float EMGFilter(float input);
-void emg(void);
+void emg();
 void plotASCII(int value, int min, int max, int width);
 void print_magnitudes();
 void web_server();
@@ -45,7 +49,7 @@ httpd_uri_t uri_get = {
 
 const TickType_t xDelay = 1000 / SAMPLE_RATE / portTICK_PERIOD_MS;
 
-void emg(void)
+void emg(void *pvParameters)
 {
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN1, ADC_ATTEN_DB_11);
@@ -94,6 +98,55 @@ void emg(void)
     }
 }
 
+void wifi_for_server(void)
+{
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    ESP_ERROR_CHECK(esp_netif_init());
+    esp_netif_create_default_wifi_sta();
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = WIFI_SSID,
+            .password = WIFI_PASS,
+        },
+    };
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
+    ESP_ERROR_CHECK(esp_wifi_start());
+
+    ESP_LOGI(TAG, "Connecting to WiFi...");
+
+    // Wait for IP address
+    esp_netif_ip_info_t ip_info;
+    esp_netif_t *netif = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+
+    if (netif)
+    {
+        if (esp_netif_get_ip_info(netif, &ip_info) == ESP_OK)
+        {
+            ESP_LOGI(TAG, "IP Address: " IPSTR, IP2STR(&ip_info.ip));
+        }
+        else
+        {
+            ESP_LOGE(TAG, "Failed to get IP address");
+        }
+    }
+    else
+    {
+        ESP_LOGE(TAG, "Failed to get network interface");
+    }
+}
+
 esp_err_t get_handler(httpd_req_t *req)
 {
     char response[8192]; // Ensure the buffer is large enough to hold the sample data
@@ -124,7 +177,7 @@ httpd_handle_t start_webserver(void)
     return server;
 }
 
-void web_server()
+void web_server(void *pvParameters)
 {
     httpd_handle_t server = start_webserver();
     if (server == NULL)
@@ -210,6 +263,7 @@ void print_magnitudes()
 
 void app_main(void)
 {
+    wifi_for_server();
     xTaskCreatePinnedToCore(emg, "does emg things", 4096, NULL, 1, NULL, 0);
     xTaskCreatePinnedToCore(web_server, "web server", 4096, NULL, 1, NULL, 1);
 }
