@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
@@ -16,7 +17,8 @@
 #define INPUT_PIN3 ADC1_CHANNEL_0
 #define INPUT_PIN4 ADC1_CHANNEL_3 // Added a new channel
 #define BUFFER_SIZE 64
-#define SAMPLE_SIZE 1280
+#define SAMPLE_SIZE 500
+#define THRESHOLD -10
 #define WIFI_SSID "dekhlo_tum_hi"
 #define WIFI_PASS "mai_nahi_bataunga"
 
@@ -92,8 +94,16 @@ void emg(void *pvParameters)
         }
         else
         {
-            print_magnitudes();
-            sample_index = 0;
+            // Check if the absolute value at the center of any samples array exceeds the threshold
+            if (abs(samples1[125]) > THRESHOLD || abs(samples2[125]) > THRESHOLD ||
+                abs(samples3[125]) > THRESHOLD || abs(samples4[125]) > THRESHOLD)
+            {
+                print_magnitudes(); // Print the samples if the condition is met
+            }
+            else
+            {
+                sample_index = 0; // Reset sample_index if the condition is not met
+            }
         }
     }
 }
