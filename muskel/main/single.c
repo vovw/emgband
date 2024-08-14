@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <ncurses.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
@@ -8,10 +7,11 @@
 
 #define SAMPLE_RATE 500
 #define INPUT_PIN ADC1_CHANNEL_6
-#define BUFFER_SIZE 64
+#define BUFFER_SIZE 300
+#define THRESHOLD 15
 
 static int circular_buffer[BUFFER_SIZE];
-static int data_index = 0, sum = 0;
+static int data_index = 0, times = 0, single = 0;
 
 static esp_adc_cal_characteristics_t adc_chars;
 
@@ -19,24 +19,35 @@ static int getEnvelope(int abs_emg);
 static float EMGFilter(float input);
 void emg(void);
 void plotASCII(int value, int min, int max, int width);
+void print_buffer();
 
 const TickType_t xDelay = 1000 / SAMPLE_RATE / portTICK_PERIOD_MS;
 
 void app_main(void)
 {
-    // Initialize ncurses
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
-
-    // Define color pairs
-    init_pair(1, COLOR_RED, COLOR_RED);
-    init_pair(2, COLOR_MAGENTA, COLOR_MAGENTA);
-    init_pair(3, COLOR_WHITE, COLOR_BLACK);
-
     xTaskCreate(emg, "does emg things", 4096, NULL, tskIDLE_PRIORITY, NULL);
+}
+
+void add(int buffer[], int size, int element)
+{
+    // Shift elements to the left to make space for the new element
+    for (int i = 0; i < size - 1; i++)
+    {
+        circular_buffer[i] = circular_buffer[i + 1];
+    }
+
+    // Add the new element at the end of the circular_buffer
+    circular_buffer[size - 1] = element;
+
+    // Return the updated circular_buffer (pointer)
+}
+
+void delete_buffer()
+{
+    for (int i = 0; i < BUFFER_SIZE; i++)
+    {
+        circular_buffer[i] = 0;
+    }
 }
 
 void emg(void)
@@ -44,8 +55,7 @@ void emg(void)
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(INPUT_PIN, ADC_ATTEN_DB_11);
     esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 0, &adc_chars);
-
-    int index = 0;
+    printf("START\n");
 
     while (1)
     {
@@ -54,46 +64,42 @@ void emg(void)
         int adc_reading = adc1_get_raw(INPUT_PIN);
         int voltage = esp_adc_cal_raw_to_voltage(adc_reading, &adc_chars);
 
+        // TODO : check and confront this
         // Convert voltage to original Arduino's 0-1023 scale
         int sensor_value = (voltage * 1023) / 4095;
 
         // Filtered EMG
         int signal = (int)EMGFilter((float)sensor_value);
-
-        clear();
-
-        if (signal > 100 || signal < -100)
+        if (data_index != BUFFER_SIZE - 1)
         {
-            bkgd(COLOR_PAIR(2));
-            mvprintw(0, 0, "HIGH ACTIVITY");
-            mvprintw(1, 0, "Signal: %d", signal);
-        }
-        else if (signal > 10 || signal < -10)
-        {
-            bkgd(COLOR_PAIR(1));
-            mvprintw(0, 0, "ACTIVE");
-            mvprintw(1, 0, "Signal: %d", signal);
-            mvprintw(2, 0, "Index: %d", index);
+            circular_buffer[data_index] = signal;
+            data_index++;
         }
         else
         {
-            bkgd(COLOR_PAIR(3));
-            mvprintw(0, 0, "IDLE");
-            mvprintw(1, 0, "Signal: %d", signal);
+            add(circular_buffer, BUFFER_SIZE, signal);
         }
-
-        refresh();
-        index++;
+        for (int i = BUFFER_SIZE / 4; i < BUFFER_SIZE / 2; i++)
+        {
+            if (abs(circular_buffer[i]) > THRESHOLD)
+            {
+                printf("times: %d\n", times);
+                print_buffer();
+                times++;
+                delete_buffer();
+                data_index = 0;
+                break;
+            }
+        }
     }
 }
 
-int getEnvelope(int abs_emg)
+void print_buffer()
 {
-    sum -= circular_buffer[data_index];
-    sum += abs_emg;
-    circular_buffer[data_index] = abs_emg;
-    data_index = (data_index + 1) % BUFFER_SIZE;
-    return (sum / BUFFER_SIZE) * 2;
+    for (int i = 0; i < BUFFER_SIZE; i++)
+    {
+        printf("%d\n", circular_buffer[i]);
+    }
 }
 
 float EMGFilter(float input)
