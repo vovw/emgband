@@ -10,7 +10,7 @@
 #define INPUT_PIN1 ADC1_CHANNEL_6 // pin 34
 #define INPUT_PIN2 ADC1_CHANNEL_7 // pin 35
 #define INPUT_PIN3 ADC1_CHANNEL_4 // pin 32
-#define INPUT_PIN4 ADC1_CHANNEL_5 // pin smth
+#define INPUT_PIN4 ADC1_CHANNEL_5 // pin 33
 
 #define BUFFER_SIZE 300
 #define THRESHOLD 15
@@ -63,6 +63,7 @@ void delete_buffer()
         circular_buffer3[i] = 0;
         circular_buffer4[i] = 0;
     }
+    return;
 }
 
 void emg(void)
@@ -109,17 +110,26 @@ void emg(void)
         {
             add(signal1, signal2, signal3, signal4);
         }
-        for (int i = BUFFER_SIZE / 4; i < BUFFER_SIZE / 2; i++)
+        for (int i = BUFFER_SIZE / 2 - BUFFER_SIZE / 8; i < BUFFER_SIZE / 2; i++)
         {
-            if (abs(circular_buffer1[i]) > THRESHOLD ||
-                abs(circular_buffer2[i]) > THRESHOLD ||
-                abs(circular_buffer3[i]) > THRESHOLD ||
-                abs(circular_buffer4[i]) > THRESHOLD)
+            // if ((abs(circular_buffer1[i]) > THRESHOLD ||
+            //      abs(circular_buffer2[i]) > THRESHOLD ||
+            //      abs(circular_buffer3[i]) > THRESHOLD ||
+            //      abs(circular_buffer4[i]) > THRESHOLD) &&
+            //     (abs(circular_buffer1[i - BUFFER_SIZE / 4]) > THRESHOLD &&
+            //      abs(circular_buffer2[i - BUFFER_SIZE / 4]) > THRESHOLD &&
+            //      abs(circular_buffer3[i - BUFFER_SIZE / 4]) > THRESHOLD &&
+            //      abs(circular_buffer4[i - BUFFER_SIZE / 4]) > THRESHOLD))
+            if ((abs(circular_buffer1[i]) > THRESHOLD ||
+                 abs(circular_buffer2[i]) > THRESHOLD ||
+                 abs(circular_buffer3[i]) > THRESHOLD ||
+                 abs(circular_buffer4[i]) > THRESHOLD))
+
             {
 
                 print_buffer();
                 printf("\n");
-                delete_buffer();
+                // delete_buffer();
                 data_index = 0;
                 break;
             }
@@ -132,7 +142,12 @@ void print_buffer()
     for (int i = 0; i < BUFFER_SIZE; i++)
     {
         printf("%d, %d, %d, %d\n", circular_buffer1[i], circular_buffer2[i], circular_buffer3[i], circular_buffer4[i]);
+        circular_buffer1[i] = 0;
+        circular_buffer2[i] = 0;
+        circular_buffer3[i] = 0;
+        circular_buffer4[i] = 0;
     }
+    return;
 }
 
 float EMGFilter(float input)
