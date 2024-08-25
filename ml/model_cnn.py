@@ -58,16 +58,18 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
     return data, labels
 
 file_paths = [
-    'data/claw_final1.txt',
+    # 'data/claw_final1.txt',
     'data/index_final1.txt',
     'data/middle_finger_final1.txt'
 ]
 
 file_labels = [
-    'claw',
+    # 'claw',
     'index',
     'middle'
 ]
+
+
 
 data, labels = load_data(file_paths, file_labels)
 
@@ -84,17 +86,45 @@ X_test = np.expand_dims(X_test, axis=-1)
 
 # Define the model with Conv1D layers and Dropout
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv1D(filters=256, kernel_size=10, activation='relu', input_shape=(300, 4)),
-    tf.keras.layers.Dropout(0.3),
+    # Input layer
+    tf.keras.layers.Input(shape=(300, 4)),
+    
+    # First Convolutional Block
+    tf.keras.layers.Conv1D(filters=256, kernel_size=15, activation='relu', padding='same'),
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPooling1D(pool_size=2),
-    tf.keras.layers.Conv1D(filters=128, kernel_size=10, activation='relu'),
     tf.keras.layers.Dropout(0.3),
+    
+    # Second Convolutional Block
+    tf.keras.layers.Conv1D(filters=128, kernel_size=10, activation='relu', padding='same'),
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPooling1D(pool_size=2),
-    tf.keras.layers.Conv1D(filters=64, kernel_size=5, activation='relu'),
     tf.keras.layers.Dropout(0.3),
+    
+    # Third Convolutional Block
+    tf.keras.layers.Conv1D(filters=64, kernel_size=5, activation='relu', padding='same'),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.MaxPooling1D(pool_size=2),
+    tf.keras.layers.Dropout(0.3),
+    
+    # Fourth Convolutional Block (for deeper feature extraction)
+    tf.keras.layers.Conv1D(filters=32, kernel_size=3, activation='relu', padding='same'),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.MaxPooling1D(pool_size=2),
+    tf.keras.layers.Dropout(0.3),
+    
+    # Flatten and Dense Layers
     tf.keras.layers.Flatten(),
-     tf.keras.layers.Dense(len(file_labels), activation='softmax')
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Dropout(0.4),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dropout(0.4),
+    
+    # Output Layer
+    tf.keras.layers.Dense(len(file_labels), activation='softmax')
 ])
+
 
 # Model compilation
 model.compile(optimizer='adam',
@@ -102,7 +132,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train, evaluate, and save the model
-model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2)
+model.fit(X_train, y_train, epochs=100, batch_size=12, validation_split=0.2)
 
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {test_acc}')

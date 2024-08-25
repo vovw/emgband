@@ -56,16 +56,34 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
 
     return data, labels
 
+# file_paths = [
+#     'data/prajwal_thumb.txt',
+#     'data/index1_prajwal.txt',
+#     'data/prajwal_middle.txt',
+#     'data/prajwal_ring.txt',
+#     'data/prajwal_pinky.txt',
+# ]
+
+# file_labels = [
+#     'thumb',
+#     'index',
+#     'middle',
+#     'ring',
+#     'pinky'
+# ]
+
 file_paths = [
     'data/claw_final1.txt',
     'data/index_final1.txt',
-    'data/middle_finger_final1.txt'
+    'data/middle_finger_final1.txt',
+    'data/thumb_final.txt'
 ]
 
 file_labels = [
     'claw',
     'index',
-    'middle'
+    'middle',
+    
 ]
 
 data, labels = load_data(file_paths, file_labels)
@@ -86,30 +104,33 @@ model = tf.keras.Sequential([
     tf.keras.layers.Input(shape=(300, 4)),
     
     # CNN layers
-    tf.keras.layers.Conv1D(filters=256, kernel_size=10, activation='relu'),
-    tf.keras.layers.MaxPooling1D(pool_size=2),
     tf.keras.layers.Conv1D(filters=128, kernel_size=10, activation='relu'),
     tf.keras.layers.MaxPooling1D(pool_size=2),
     tf.keras.layers.Conv1D(filters=64, kernel_size=5, activation='relu'),
+    tf.keras.layers.MaxPooling1D(pool_size=2),
+    tf.keras.layers.Conv1D(filters=32, kernel_size=3, activation='relu'),
     tf.keras.layers.Dropout(0.3),
     
     # LSTM layers
-    tf.keras.layers.LSTM(64, return_sequences=True),  # returns sequences
+    tf.keras.layers.LSTM(64, return_sequences=True),  # returns sequences for stacking LSTMs
     tf.keras.layers.Dropout(0.3),
-    tf.keras.layers.LSTM(32),  # returns sequences for the next LSTM layer
+    tf.keras.layers.LSTM(32),  # final LSTM layer
     
-    # Dense layers
+    # Dense layer
+    tf.keras.layers.Dense(32, activation='relu'),  # Additional Dense layer for better learning
+    tf.keras.layers.Dropout(0.3),
+    
+    # Output layer
     tf.keras.layers.Dense(len(file_labels), activation='softmax')
 ])
-
 
 # Compile the model
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-# Train, evaluate, and save the model
-model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2)
+# Train the model
+model.fit(X_train, y_train, epochs=250, batch_size=32, validation_split=0.2)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, y_test)
@@ -121,4 +142,6 @@ y_pred = model.predict(X_test)
 y_pred_classes = np.argmax(y_pred, axis=1)  # Convert probabilities to class labels
 print(f'Predicted classes: {y_pred_classes}')
 print(f'Actual classes: {y_test}')
-model.save('emg_moment_prediction_model.h5')
+
+# Save the model
+model.save('emg_moment_prediction_model_cnnlstm.h5')

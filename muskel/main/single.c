@@ -6,7 +6,7 @@
 #include "esp_adc_cal.h"
 
 #define SAMPLE_RATE 500
-#define INPUT_PIN ADC1_CHANNEL_6
+#define INPUT_PIN ADC1_CHANNEL_5
 #define BUFFER_SIZE 300
 #define THRESHOLD 15
 
