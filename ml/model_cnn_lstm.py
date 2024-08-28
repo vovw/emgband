@@ -39,8 +39,10 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
                         labels.append(label)
                         example = []
                         
-                # If there is any leftover data that didn't fill a full example, you can handle it here.
-                # (Omitting this part if your data is always a perfect multiple of 300 lines)
+                # Handle any leftover data (optional)
+                if example:  # If there are leftover lines that don't complete an example
+                    # You can choose to either discard or pad these examples
+                    pass
                 
         except FileNotFoundError:
             print(f"File not found: {file_path}")
@@ -56,34 +58,19 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
 
     return data, labels
 
-# file_paths = [
-#     'data/prajwal_thumb.txt',
-#     'data/index1_prajwal.txt',
-#     'data/prajwal_middle.txt',
-#     'data/prajwal_ring.txt',
-#     'data/prajwal_pinky.txt',
-# ]
-
-# file_labels = [
-#     'thumb',
-#     'index',
-#     'middle',
-#     'ring',
-#     'pinky'
-# ]
-
+# File paths and labels
 file_paths = [
-    'data/claw_final1.txt',
-    'data/index_final1.txt',
-    'data/middle_finger_final1.txt',
-    'data/thumb_final.txt'
+    'data/final_data/claw_final1.txt',
+    'data/final_data/index_final1.txt',
+    'data/final_data/middle_finger_final1.txt',
+    'data/final_data/thumb_final.txt'
 ]
 
 file_labels = [
     'claw',
     'index',
     'middle',
-    
+    'thumb'
 ]
 
 data, labels = load_data(file_paths, file_labels)
@@ -145,3 +132,15 @@ print(f'Actual classes: {y_test}')
 
 # Save the model
 model.save('emg_moment_prediction_model_cnnlstm.h5')
+
+# Convert the model to TFLite
+def convert_model_to_tflite(keras_model_path, tflite_model_path):
+    model = tf.keras.models.load_model(keras_model_path)
+    converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]
+    converter._experimental_lower_tensor_list_ops = False
+    tflite_model = converter.convert()
+    with open(tflite_model_path, 'wb') as f:
+        f.write(tflite_model)
+
+convert_model_to_tflite('emg_moment_prediction_model_cnnlstm.h5', 'emg_moment_prediction_model_cnnlstm.tflite')
