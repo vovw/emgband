@@ -1,7 +1,7 @@
 # EMG Armband
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/7166b846-3b5f-4400-821d-bd9e433ab1e2" alt="EMG Armband logo" width="200">
+  <img src="https://github.com/user-attachments/assets/7166b846-3b5f-4400-821d-bd9e433ab1e2" alt="EMG Armband logo" width="300">
 </p>
 
 <p align="center">
@@ -46,7 +46,7 @@ python3 inference.py       # Starts the inference
 - [Blog Post: How Does EMG Armband Work?](https://blog.sravjti.in/2024/07/26/how-does-emg-armband-work.html)
 
 <p align="center">
-  <img src="https://blog.sravjti.in/assets/posts/emg-armband/upside_down.svg" alt="EMG Armband Diagram">
+  <img src="https://blog.sravjti.in/assets/posts/emg-armband/upside_down.svg" alt="EMG Armband Diagram "width="250">
 </p>
 
 <p align="center">
